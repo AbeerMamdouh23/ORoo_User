@@ -1,0 +1,74 @@
+2024-10-12 15:30:38,012 - INFO - Initializing the browser
+2024-10-12 15:33:43,456 - INFO - Initializing the browser
+2024-10-12 15:33:50,995 - INFO - Browser closed
+2024-10-12 15:36:34,645 - INFO - Initializing the browser
+2024-10-12 15:36:41,993 - INFO - Browser closed
+2024-10-12 15:37:12,431 - INFO - Initializing the browser
+2024-10-12 15:37:19,916 - INFO - Browser closed
+2024-10-12 15:45:31,609 - INFO - Initializing the browser
+2024-10-12 15:45:39,018 - INFO - Browser closed
+2024-10-12 15:50:57,753 - INFO - Initializing the browser
+2024-10-12 15:51:06,545 - INFO - Browser closed
+2024-10-12 15:53:46,694 - INFO - Initializing the browser
+2024-10-12 15:53:55,218 - INFO - Browser closed
+2024-10-12 15:55:20,709 - INFO - Initializing the browser
+2024-10-12 15:55:30,176 - INFO - Browser closed
+2024-10-12 16:01:50,111:INFO:Test started
+2024-10-12 16:01:50,112:INFO:====== WebDriver manager ======
+2024-10-12 16:01:51,966:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:01:52,225:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:01:52,406:INFO:Driver [C:\Users\EGYPT_LAPTOP\.wdm\drivers\chromedriver\win64\129.0.6668.100\chromedriver-win32/chromedriver.exe] found in cache
+2024-10-12 16:01:54,088:INFO:Screenshot saved: screenshots\test_invalid_login.png
+2024-10-12 16:01:56,256:INFO:Test finished
+2024-10-12 16:02:40,427:INFO:Test started
+2024-10-12 16:02:40,428:INFO:====== WebDriver manager ======
+2024-10-12 16:02:42,241:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:02:42,504:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:02:42,766:INFO:Driver [C:\Users\EGYPT_LAPTOP\.wdm\drivers\chromedriver\win64\129.0.6668.100\chromedriver-win32/chromedriver.exe] found in cache
+2024-10-12 16:02:44,461:INFO:Screenshot saved: screenshots\test_invalid_login.png
+2024-10-12 16:02:46,610:INFO:Test finished
+2024-10-12 16:07:01,338:INFO:Test started
+2024-10-12 16:07:01,338:INFO:====== WebDriver manager ======
+2024-10-12 16:07:03,171:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:07:03,402:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:07:03,858:INFO:Driver [C:\Users\EGYPT_LAPTOP\.wdm\drivers\chromedriver\win64\129.0.6668.100\chromedriver-win32/chromedriver.exe] found in cache
+2024-10-12 16:08:04,007:INFO:Test started
+2024-10-12 16:08:04,008:INFO:====== WebDriver manager ======
+2024-10-12 16:08:05,886:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:08:06,076:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:08:06,260:INFO:Driver [C:\Users\EGYPT_LAPTOP\.wdm\drivers\chromedriver\win64\129.0.6668.100\chromedriver-win32/chromedriver.exe] found in cache
+2024-10-12 16:10:52,242:INFO:Test started
+2024-10-12 16:10:52,242:INFO:====== WebDriver manager ======
+2024-10-12 16:10:54,046:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:10:54,246:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:10:54,464:INFO:Driver [C:\Users\EGYPT_LAPTOP\.wdm\drivers\chromedriver\win64\129.0.6668.100\chromedriver-win32/chromedriver.exe] found in cache
+2024-10-12 16:10:57,721:INFO:Screenshot saved: screenshots\test_invalid_login.png
+2024-10-12 16:10:59,878:INFO:Test finished
+2024-10-12 16:13:25,023:INFO:Test started
+2024-10-12 16:13:25,024:INFO:====== WebDriver manager ======
+2024-10-12 16:13:26,794:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:13:27,100:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:13:27,509:INFO:Driver [C:\Users\EGYPT_LAPTOP\.wdm\drivers\chromedriver\win64\129.0.6668.100\chromedriver-win32/chromedriver.exe] found in cache
+2024-10-12 16:13:30,977:INFO:Screenshot saved: screenshots\test_invalid_login.png
+2024-10-12 16:13:33,141:INFO:Test finished
+2024-10-12 16:14:17,505:INFO:Test started
+2024-10-12 16:14:17,505:INFO:====== WebDriver manager ======
+2024-10-12 16:14:19,381:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:14:19,553:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:14:19,787:INFO:Driver [C:\Users\EGYPT_LAPTOP\.wdm\drivers\chromedriver\win64\129.0.6668.100\chromedriver-win32/chromedriver.exe] found in cache
+2024-10-12 16:14:22,973:INFO:Screenshot saved: screenshots\test_invalid_login.png
+2024-10-12 16:14:25,134:INFO:Test finished
+2024-10-12 16:36:45,584:INFO:Test started
+2024-10-12 16:36:45,584:INFO:====== WebDriver manager ======
+2024-10-12 16:36:47,682:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:36:48,342:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:36:48,877:INFO:Driver [C:\Users\EGYPT_LAPTOP\.wdm\drivers\chromedriver\win64\129.0.6668.100\chromedriver-win32/chromedriver.exe] found in cache
+2024-10-12 16:36:53,722:INFO:Screenshot saved: screenshots\test_invalid_login.png
+2024-10-12 16:36:55,872:INFO:Test finished
+2024-10-12 16:48:17,376:INFO:Test started
+2024-10-12 16:48:17,383:INFO:====== WebDriver manager ======
+2024-10-12 16:48:19,124:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:48:19,689:INFO:Get LATEST chromedriver version for google-chrome
+2024-10-12 16:48:20,207:INFO:Driver [C:\Users\EGYPT_LAPTOP\.wdm\drivers\chromedriver\win64\129.0.6668.100\chromedriver-win32/chromedriver.exe] found in cache
+2024-10-12 16:48:23,542:INFO:Screenshot saved: screenshots\test_invalid_login.png
+2024-10-12 16:48:25,702:INFO:Test finished

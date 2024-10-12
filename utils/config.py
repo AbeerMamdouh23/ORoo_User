@@ -1,0 +1,16 @@
+import os
+import time
+
+def take_screenshot(driver, name):
+    timestamp = time.strftime("%Y%m%d-%H%M%S")
+    screenshot_name = f"{name}_{timestamp}.png"
+    screenshot_path = os.path.join("reports", screenshot_name)
+    driver.save_screenshot(screenshot_path)
+
+
+
+
+class Config:
+    URL = "https://www.zumrafood.com/en"  # Replace with the actual login page URL
+    USERNAME = "user"
+    PASSWORD = "password"
