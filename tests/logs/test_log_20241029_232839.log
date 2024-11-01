@@ -1,0 +1,9 @@
+2024-10-29 23:28:40,081 - INFO - ====== WebDriver manager ======
+2024-10-29 23:28:41,845 - INFO - Get LATEST chromedriver version for google-chrome
+2024-10-29 23:29:03,068 - INFO - Get LATEST chromedriver version for google-chrome
+2024-10-29 23:29:24,344 - INFO - Driver [C:\Users\Amr\.wdm\drivers\chromedriver\win64\130.0.6723.91\chromedriver-win32/chromedriver.exe] found in cache
+2024-10-29 23:29:35,650 - DEBUG - This is a debug message.
+2024-10-29 23:29:35,650 - INFO - This is an info message.
+2024-10-29 23:29:35,651 - WARNING - This is a warning message.
+2024-10-29 23:29:35,696 - ERROR - This is an error message.
+2024-10-29 23:29:35,696 - CRITICAL - This is a critical message.

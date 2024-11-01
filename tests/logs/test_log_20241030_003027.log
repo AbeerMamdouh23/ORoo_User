@@ -1,0 +1,6 @@
+2024-10-30 00:30:28,175 - INFO - ====== WebDriver manager ======
+2024-10-30 00:30:29,645 - INFO - Get LATEST chromedriver version for google-chrome
+2024-10-30 00:30:34,441 - INFO - Get LATEST chromedriver version for google-chrome
+2024-10-30 00:30:34,704 - INFO - Driver [C:\Users\Amr\.wdm\drivers\chromedriver\win64\130.0.6723.91\chromedriver-win32/chromedriver.exe] found in cache
+2024-10-30 00:30:38,761 - INFO - page opened:https://user.ooro.co.uk/
+2024-10-30 00:30:38,762 - INFO - invalid_user@example.com sent to (('id', 'loginFormEmailAddress'),) 

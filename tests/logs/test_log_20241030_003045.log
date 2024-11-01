@@ -1,0 +1,8 @@
+2024-10-30 00:30:45,930 - INFO - ====== WebDriver manager ======
+2024-10-30 00:30:47,650 - INFO - Get LATEST chromedriver version for google-chrome
+2024-10-30 00:30:48,050 - INFO - Get LATEST chromedriver version for google-chrome
+2024-10-30 00:30:48,271 - INFO - Driver [C:\Users\Amr\.wdm\drivers\chromedriver\win64\130.0.6723.91\chromedriver-win32/chromedriver.exe] found in cache
+2024-10-30 00:30:52,610 - INFO - page opened:https://user.ooro.co.uk/
+2024-10-30 00:30:52,610 - INFO - invalid_user@example.com sent to (('id', 'loginFormEmailAddress'),) 
+2024-10-30 00:30:52,848 - INFO - wrong_password sent to (('id', 'loginFormPassword'),) 
+2024-10-30 00:30:52,987 - INFO - ('class name', 'login_formButtons__3UJaC') clicked

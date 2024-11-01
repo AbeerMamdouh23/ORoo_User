@@ -11,6 +11,6 @@ def take_screenshot(driver, name):
 
 
 class Config:
-    URL = "https://www.zumrafood.com/en"  # Replace with the actual login page URL
+    URL = "https://user.ooro.co.uk/"  # Replace with the actual login page URL
     USERNAME = "user"
     PASSWORD = "password"

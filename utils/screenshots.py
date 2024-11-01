@@ -3,7 +3,7 @@ import time
 
 def take_screenshot(driver, name):
     # Create the 'screenshots' directory if it doesn't exist
-    screenshots_dir = os.path.join("reports", "screenshots")
+    screenshots_dir = r"screenshots/"
     if not os.path.exists(screenshots_dir):
         os.makedirs(screenshots_dir)
 
@@ -13,5 +13,5 @@ def take_screenshot(driver, name):
     screenshot_path = os.path.join(screenshots_dir, screenshot_name)
 
     # Save the screenshot to the path
-    driver.save_screenshot(
-        r"C:\Users\EGYPT_LAPTOP\PycharmProjects\pythonProject\reporter\screenshots")
+    driver.save_screenshot(screenshot_path)  # Save to the full path
+    print(f"Screenshot saved at {screenshot_path}")
