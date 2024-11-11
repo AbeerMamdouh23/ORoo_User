@@ -1,0 +1,12 @@
+2024-11-11 01:45:57,997 - INFO - ====== WebDriver manager ======
+2024-11-11 01:46:00,120 - INFO - Get LATEST chromedriver version for google-chrome
+2024-11-11 01:46:00,446 - INFO - Get LATEST chromedriver version for google-chrome
+2024-11-11 01:46:00,599 - INFO - Driver [C:\Users\Amr\.wdm\drivers\chromedriver\win64\130.0.6723.116\chromedriver-win32/chromedriver.exe] found in cache
+2024-11-11 01:46:03,977 - INFO - page opened:https://user.ooro.co.uk/
+2024-11-11 01:46:03,978 - INFO - ('id', 'navbarDeviceItemSelected') clicked
+2024-11-11 01:46:07,550 - INFO - ====== WebDriver manager ======
+2024-11-11 01:46:10,053 - INFO - Get LATEST chromedriver version for google-chrome
+2024-11-11 01:46:10,258 - INFO - Get LATEST chromedriver version for google-chrome
+2024-11-11 01:46:10,456 - INFO - Driver [C:\Users\Amr\.wdm\drivers\chromedriver\win64\130.0.6723.116\chromedriver-win32/chromedriver.exe] found in cache
+2024-11-11 01:46:13,340 - INFO - page opened:https://user.ooro.co.uk/
+2024-11-11 01:46:13,341 - INFO - ('id', 'navbarDeviceItemSelected') clicked

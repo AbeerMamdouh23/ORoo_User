@@ -1,0 +1,14 @@
+2024-11-01 22:19:58,538 - INFO - ====== WebDriver manager ======
+2024-11-01 22:20:00,661 - INFO - Get LATEST chromedriver version for google-chrome
+2024-11-01 22:20:08,060 - INFO - Get LATEST chromedriver version for google-chrome
+2024-11-01 22:20:08,342 - INFO - Get LATEST chromedriver version for google-chrome
+2024-11-01 22:20:09,439 - INFO - WebDriver version 130.0.6723.91 selected
+2024-11-01 22:20:09,443 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/130.0.6723.91/win32/chromedriver-win32.zip
+2024-11-01 22:20:09,444 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/130.0.6723.91/win32/chromedriver-win32.zip
+2024-11-01 22:20:09,905 - INFO - Driver downloading response is 200
+2024-11-01 22:21:25,204 - INFO - Get LATEST chromedriver version for google-chrome
+2024-11-01 22:21:26,378 - INFO - Driver has been saved in cache [C:\Users\Amr\.wdm\drivers\chromedriver\win64\130.0.6723.91]
+2024-11-01 22:21:35,563 - INFO - page opened:https://user.ooro.co.uk/
+2024-11-01 22:21:35,565 - INFO - invalid_user@example.com sent to (('id', 'loginFormEmailAddress'),) 
+2024-11-01 22:21:46,535 - INFO - wrong_password sent to (('id', 'loginFormPassword'),) 
+2024-11-01 22:21:46,659 - INFO - ('class name', 'login_formButtons__3UJaC') clicked

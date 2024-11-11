@@ -11,7 +11,8 @@ class LoginPage(BasePage):
     EMAIL_FIELD = (By.ID, "loginFormEmailAddress")
     PASSWORD_FIELD = (By.ID, "loginFormPassword")
     LOGIN_BUTTON = (By.CLASS_NAME, "login_formButtons__3UJaC")
-    ERROR_MESSAGE = (By.ID, "loginFormErrorMessage")  # Assuming error message appears here
+    ERROR_MESSAGE = (By.ID, "loginFormErrorMessage")
+    DASHBOARD_TEXT = (By.ID, "navbarContainerTitle")
 
     def enter_email(self, email):
             self.send_keys(email,self.EMAIL_FIELD)
@@ -25,3 +26,7 @@ class LoginPage(BasePage):
     def get_error_message(self):
         WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.ERROR_MESSAGE))
         return self.driver.find_element(*self.ERROR_MESSAGE).text
+
+    def get_dashboard_text(self):
+        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.DASHBOARD_TEXT))
+        return self.driver.find_element(*self.DASHBOARD_TEXT)

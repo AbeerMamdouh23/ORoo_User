@@ -82,6 +82,7 @@ def setup():
     options = webdriver.ChromeOptions()
     # Add options if needed, for example:
     # options.add_argument("--headless")  # Uncomment for headless mode
+    options.add_argument("--ignore-certificate-errors")
     service = ChromeService(executable_path= ChromeDriverManager().install())  # Using WebDriver Manager for Edge
     driver = webdriver.Chrome(service=service, options=options)
     

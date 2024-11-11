@@ -1,0 +1,16 @@
+2024-11-10 16:30:40,950 - INFO - ====== WebDriver manager ======
+2024-11-10 16:30:42,162 - INFO - Get LATEST chromedriver version for google-chrome
+2024-11-10 16:30:42,322 - INFO - Get LATEST chromedriver version for google-chrome
+2024-11-10 16:30:42,466 - INFO - Driver [C:\Users\Amr\.wdm\drivers\chromedriver\win64\130.0.6723.116\chromedriver-win32/chromedriver.exe] found in cache
+2024-11-10 16:30:44,360 - INFO - page opened:https://user.ooro.co.uk/
+2024-11-10 16:30:44,382 - INFO - testuser@email.com sent to (('id', 'loginFormEmailAddress'),) 
+2024-11-10 16:30:44,983 - INFO - Testuser@1 sent to (('id', 'loginFormPassword'),) 
+2024-11-10 16:30:45,093 - INFO - ('class name', 'login_formButtons__3UJaC') clicked
+2024-11-10 16:30:49,132 - INFO - ====== WebDriver manager ======
+2024-11-10 16:30:50,317 - INFO - Get LATEST chromedriver version for google-chrome
+2024-11-10 16:30:50,475 - INFO - Get LATEST chromedriver version for google-chrome
+2024-11-10 16:30:50,630 - INFO - Driver [C:\Users\Amr\.wdm\drivers\chromedriver\win64\130.0.6723.116\chromedriver-win32/chromedriver.exe] found in cache
+2024-11-10 16:30:52,619 - INFO - page opened:https://user.ooro.co.uk/
+2024-11-10 16:30:52,619 - INFO - invalid_user@example.com sent to (('id', 'loginFormEmailAddress'),) 
+2024-11-10 16:30:53,232 - INFO - wrong_password sent to (('id', 'loginFormPassword'),) 
+2024-11-10 16:30:53,345 - INFO - ('class name', 'login_formButtons__3UJaC') clicked
