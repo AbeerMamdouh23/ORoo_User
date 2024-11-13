@@ -15,18 +15,21 @@ class LoginPage(BasePage):
     DASHBOARD_TEXT = (By.ID, "navbarContainerTitle")
 
     def enter_email(self, email):
-            self.send_keys(email,self.EMAIL_FIELD)
+        self.send_text(email, *self.EMAIL_FIELD)
 
     def enter_password(self, password):
-        self.send_keys(password,self.PASSWORD_FIELD)
+        self.send_text(password, *self.PASSWORD_FIELD)
 
     def click_login(self):
-        self.click(self.LOGIN_BUTTON)
+        self.click(*self.LOGIN_BUTTON)
+
+    def login_steps(self,email,password):
+        self.send_text(email, *self.EMAIL_FIELD)
+        self.send_text(password, *self.PASSWORD_FIELD)
+        self.click(*self.LOGIN_BUTTON)
 
     def get_error_message(self):
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.ERROR_MESSAGE))
-        return self.driver.find_element(*self.ERROR_MESSAGE).text
+        return self.get_text(*self.ERROR_MESSAGE)
 
     def get_dashboard_text(self):
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.DASHBOARD_TEXT))
-        return self.driver.find_element(*self.DASHBOARD_TEXT)
+        return self.find_element(*self.DASHBOARD_TEXT)

@@ -1,3 +1,5 @@
+import os
+
 import pytest
 import yaml
 import logging
@@ -11,12 +13,11 @@ from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 # Create logs directory
-log_dir = Path("logs")
-log_dir.mkdir(parents=True, exist_ok=True)
+log_dir =  os.path.join(os.getcwd(), "..", "test-output", "logs")
 
 # Set up logging
 logging.basicConfig(
-    filename=log_dir / f"test_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log",
+    filename=os.path.join(log_dir, f"test_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log") ,
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"  # Fixed format specifier
 )
@@ -85,7 +86,8 @@ def setup():
     options.add_argument("--ignore-certificate-errors")
     service = ChromeService(executable_path= ChromeDriverManager().install())  # Using WebDriver Manager for Edge
     driver = webdriver.Chrome(service=service, options=options)
-    
+    driver.maximize_window()
+
     yield driver  # Yield the driver to the tests
     
     driver.quit()  # Quit the driver after tests

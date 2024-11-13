@@ -1,8 +1,0 @@
-2024-11-04 00:43:54,200 - INFO - ====== WebDriver manager ======
-2024-11-04 00:43:56,377 - INFO - Get LATEST chromedriver version for google-chrome
-2024-11-04 00:43:56,894 - INFO - Get LATEST chromedriver version for google-chrome
-2024-11-04 00:43:57,376 - INFO - Driver [C:\Users\Amr\.wdm\drivers\chromedriver\win64\130.0.6723.91\chromedriver-win32/chromedriver.exe] found in cache
-2024-11-04 00:44:01,513 - INFO - page opened:https://user.ooro.co.uk/
-2024-11-04 00:44:01,514 - INFO - testuser@email.com sent to (('id', 'loginFormEmailAddress'),) 
-2024-11-04 00:44:01,769 - INFO - Testuser@1 sent to (('id', 'loginFormPassword'),) 
-2024-11-04 00:44:02,133 - INFO - ('class name', 'login_formButtons__3UJaC') clicked

@@ -1,5 +1,0 @@
-2024-10-30 00:22:25,691 - INFO - ====== WebDriver manager ======
-2024-10-30 00:22:27,187 - INFO - Get LATEST chromedriver version for google-chrome
-2024-10-30 00:22:27,494 - INFO - Get LATEST chromedriver version for google-chrome
-2024-10-30 00:22:28,056 - INFO - Driver [C:\Users\Amr\.wdm\drivers\chromedriver\win64\130.0.6723.91\chromedriver-win32/chromedriver.exe] found in cache
-2024-10-30 00:22:34,855 - INFO - page opened:https://user.ooro.co.uk/

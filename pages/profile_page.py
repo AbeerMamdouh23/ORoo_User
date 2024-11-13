@@ -14,13 +14,13 @@ class ProfilePage(BasePage):
     EMAIL_FIELD = (By.ID, "profileFormDataInputEmailAddress")
 
     def click_profile_avatar(self):
-        self.click(self.PROFILE_AVATAR_ICON)
+        self.click(*self.PROFILE_AVATAR_ICON)
 
-    def check_fname_value(self):
-        self.find_element(self.FIRST_NAME_FIELD).text
+    def check_first_name_value(self):
+        return self.get_text_from_input(*self.FIRST_NAME_FIELD)
 
-    def check_lname_value(self):
-        self.find_element(self.LAST_NAME_FIELD).text
+    def check_last_name_value(self):
+        return self.get_text_from_input(*self.LAST_NAME_FIELD)
 
     def check_email_value(self):
-        self.find_element(self.EMAIL_FIELD).text
+        return self.get_text_from_input(*self.EMAIL_FIELD)
