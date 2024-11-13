@@ -12,12 +12,18 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
-# Create logs directory
-log_dir =  os.path.join(os.getcwd(), "..", "test-output", "logs")
+import os
+import logging
+from datetime import datetime
+
+# Create logs directory (if it doesn't exist)
+log_dir = os.path.join(os.getcwd(), "..", "test-output", "logs")
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)
 
 # Set up logging
 logging.basicConfig(
-    filename=os.path.join(log_dir, f"test_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log") ,
+    filename=os.path.join(log_dir, f"test_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"),
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"  # Fixed format specifier
 )
