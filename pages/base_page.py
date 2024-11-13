@@ -24,7 +24,11 @@ class BasePage:
         return WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator)).text
 
     def get_text_from_input(self, *locator):
-        return WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator)).get_attribute("value")
+        element =  WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator))
+        WebDriverWait(self.driver, 10).until(
+            lambda d:d.find_element(*locator).get_attribute("value")  != ""
+                )
+        return element.get_attribute("value")
 
     def get_title(self):
         title = self.driver.title

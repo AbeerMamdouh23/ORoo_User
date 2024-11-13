@@ -32,19 +32,10 @@ class TestProfile:
         profile_page.click_profile_avatar()
 
         # Assert and handle screenshot on failure of first name
-        actual_fname_value = profile_page.check_first_name_value()
-        assert (actual_fname_value== "Test")
-
-        take_screenshot(self.driver, "Correct_Fname_screenshot")
-
+        assert (profile_page.check_first_name_value()== "Test")
         # Assert and handle screenshot on failure of last name
-        actual_lname_value = profile_page.check_last_name_value()
-        assert (actual_lname_value== "User")
-
-        take_screenshot(self.driver, "Correct_Lname_screenshot")
-
+        assert (profile_page.check_last_name_value()== "User")
         # Assert and handle screenshot on failure of email
-        actual_email_value = profile_page.check_email_value()
-        assert (actual_email_value== "testuser@email.com")
-
-        take_screenshot(self.driver, "Correct_Email_screenshot")
+        assert (profile_page.check_email_value()== "testuser@email.com")
+        
+        take_screenshot(self.driver, "verify_Profile_screenshot")
