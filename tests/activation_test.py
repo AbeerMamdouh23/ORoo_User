@@ -55,7 +55,7 @@ class TestActivation:
 
         # Perform login actions with valid credentials
         activation_page.click_manage_devices_button()
-        activation_page.click_activation_button_no_devices()
+        activation_page.click_activation_button_existing_devices()
         activation_page.enter_activation_code("11")
         activation_page.click_activate_button()
 
