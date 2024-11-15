@@ -20,7 +20,7 @@ class TestProfile:
 
         # Initialize the LoginPage object with the driver instance
         login_page = LoginPage(self.driver)
-        login_page.login_steps("testuser@email.com", "Testuser@1")
+        login_page.login_steps(Config.USERNAME,Config.PASSWORD)
 
         # Initialize the ProfilePage object with the driver instance
         profile_page = ProfilePage(self.driver)

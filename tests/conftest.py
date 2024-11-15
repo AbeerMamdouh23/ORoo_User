@@ -24,7 +24,9 @@ from datetime import datetime
 from utils.config import Config
 
 # Create logs directory (if it doesn't exist)
-log_dir = os.path.join(os.getcwd(), "..", "test-output", "logs")
+script_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+log_dir = os.path.join(script_dir, "test-output", "logs")
+
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)
 
@@ -34,7 +36,22 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"  # Fixed format specifier
 )
+import os
 
+@pytest.hookimpl(tryfirst=True)
+def pytest_configure(config):
+    # Determine the project root
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    allure_results_dir = os.path.join(project_root, "test-output/allure-results")
+
+    # Set the allure results directory dynamically
+    config.option.allure_report_dir = allure_results_dir
+
+    # Create the directory if it doesn't exist
+    if not os.path.exists(allure_results_dir):
+        os.makedirs(allure_results_dir)
+
+    print(f"Allure results directory set to: {allure_results_dir}")
 @pytest.fixture(scope="session")
 def load_config():
     config_path = Path("nonexistent_config.yaml")
@@ -92,10 +109,11 @@ def api_client(environment):
 
 @pytest.fixture(scope="session" ,autouse=True)
 def clean_report():
-    folder_path = 'test-output/allure-results'
-    if os.path.exists(folder_path):
-        shutil.rmtree(folder_path)
-    os.makedirs(folder_path)
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    allure_results_dir = os.path.join(project_root, "test-output/allure-results")
+    if os.path.exists(allure_results_dir):
+        shutil.rmtree(allure_results_dir)
+    os.makedirs(allure_results_dir)
 
 """def pytest_sessionfinish (session, exitstatus):
     allure_results_dir = "test-output/allure-results"

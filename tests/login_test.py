@@ -27,8 +27,8 @@ class TestLogin:
         login_page = LoginPage(self.driver)
 
         # Perform login actions with valid credentials
-        login_page.enter_email("testuser@email.com")
-        login_page.enter_password("Testuser@1")
+        login_page.enter_email(Config.USERNAME)
+        login_page.enter_password(Config.PASSWORD)
         login_page.click_login()
 
         # Assert and handle screenshot on failure

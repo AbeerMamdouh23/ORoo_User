@@ -13,5 +13,5 @@ def take_screenshot(driver, name):
 class Config:
     URL = "https://user.ooro.co.uk/"  # Replace with the actual login page URL
     STAGING_URL = ""  # Replace with the actual login page URL
-    USERNAME = "user"
-    PASSWORD = "password"
+    USERNAME = "testuser@email.com"
+    PASSWORD = "Testuser@1"

@@ -13,7 +13,8 @@ class Logger:
             self.logger.setLevel(logging.DEBUG)
 
             # Create a logs directory if it doesn't exist
-            log_directory = os.path.join(os.getcwd(),"..","test-output", "logs")
-            if not os.path.exists(log_directory):
-                os.makedirs(log_directory)
+            script_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+            log_dir = os.path.join(script_dir,  "test-output", "logs")
+            if not os.path.exists(log_dir):
+                os.makedirs(log_dir)
         return self.logger

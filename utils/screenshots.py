@@ -3,7 +3,8 @@ import time
 
 def take_screenshot(driver, name):
     # Create the 'screenshots' directory if it doesn't exist
-    screenshots_dir = os.path.join(os.getcwd(), "..", "test-output", "screenshots")
+    script_dir =os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    screenshots_dir = os.path.join(script_dir, "test-output", "screenshots")
     if not os.path.exists(screenshots_dir):
         os.makedirs(screenshots_dir)
 

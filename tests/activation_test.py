@@ -20,7 +20,7 @@ class TestActivation:
 
         # Initialize the LoginPage object with the driver instance
         login_page = LoginPage(self.driver)
-        login_page.login_steps("testuser@email.com", "Testuser@1")
+        login_page.login_steps(Config.USERNAME,Config.PASSWORD)
 
         # Initialize the ActivationPage object with the driver instance
         activation_page = ActivationPage(self.driver)
