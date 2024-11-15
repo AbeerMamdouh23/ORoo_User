@@ -1,0 +1,12 @@
+INFO     WDM:logger.py:11 ====== WebDriver manager ======
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Driver [C:\Users\Amr\.wdm\drivers\chromedriver\win64\131.0.6778.69\chromedriver-win32/chromedriver.exe] found in cache
+INFO     test_logger:activation_test.py:23 page opened:https://user.ooro.co.uk/
+INFO     test_logger:base_page.py:21 testuser@email.com sent to ('id', 'loginFormEmailAddress') 
+INFO     test_logger:base_page.py:21 Testuser@1 sent to ('id', 'loginFormPassword') 
+INFO     test_logger:base_page.py:17 ('class name', 'login_formButtons__3UJaC') clicked
+INFO     test_logger:base_page.py:17 ('id', 'navbarDeviceItemSelected') clicked
+INFO     test_logger:base_page.py:17 ('id', 'devicesActivateButton') clicked
+INFO     test_logger:base_page.py:21 b8b23c1d sent to ('id', 'activationItemCode') 
+INFO     test_logger:base_page.py:17 ('id', 'activationItemButton') clicked

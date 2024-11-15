@@ -34,9 +34,10 @@ class TestActivation:
         random_code = ActivationCodeManager.get_random_activation_code('activation_codes.json')
         activation_page.enter_activation_code(random_code)
         activation_page.click_activate_button()
-
+        print(f"Activation code '{random_code}'")
         # Assert and handle screenshot on failure
         assert "Device successfully activated" in activation_page.get_success_message()
+        ActivationCodeManager.delete_activation_code('activation_codes.json',random_code)
         take_screenshot(self.driver, "valid_activation_code_screenshot")
 
     # Test case for invalid activation code

@@ -1,4 +1,6 @@
 import os
+import subprocess
+from pickle import TRUE
 
 import pytest
 import yaml
@@ -83,6 +85,21 @@ def api_client(environment):
     client = "api_client_placeholder"
     yield client
 
+@pytest.fixture(scope="session" ,autouse=True)
+def clean_report():
+    folder_path = 'test-output/allure-results'
+    if os.path.exists(folder_path):
+        shutil.rmtree(folder_path)
+    os.makedirs(folder_path)
+
+"""def pytest_sessionfinish (session, exitstatus):
+    allure_results_dir = "test-output/allure-results"
+    if os.path.exists(allure_results_dir):
+        subprocess.run(['where', 'allure'])  # For Windows; use 'which allure' for Linux/Mac
+        # Just generate the Allure report (without opening the browser)
+        subprocess.Popen(['allure.bat', 'generate', allure_results_dir, '-o', 'test-output/allure-report'])
+        print("Allure report generated in 'allure-report' directory.")
+"""
 @pytest.fixture(scope="function")
 def setup():
     # Set up Chrome WebDriver using WebDriverManager
@@ -95,5 +112,4 @@ def setup():
     driver.maximize_window()
 
     yield driver  # Yield the driver to the tests
-    
     driver.quit()  # Quit the driver after tests

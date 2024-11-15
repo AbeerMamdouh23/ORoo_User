@@ -36,3 +36,25 @@ class ActivationCodeManager:
             data = json.load(f)
             activation_codes = data['activation-codes']
             return random.choice(activation_codes)
+
+
+    @classmethod
+    def delete_activation_code(cls, file_path, code_to_delete):
+
+        activation_code_file = get_file_path(file_path)
+
+        with open(activation_code_file, 'r') as f:
+            data = json.load(f)
+            activation_codes = data.get('activation-codes', [])
+
+        if code_to_delete not in activation_codes:
+            raise ValueError(f"Activation code '{code_to_delete}' not found in the list.")
+
+        # Remove the code from the list
+        activation_codes.remove(code_to_delete)
+
+        # Write the updated list back to the file
+        with open(activation_code_file, 'w') as f:
+            data['activation-codes'] = activation_codes
+            json.dump(data, f, indent=4)
+            print(f"Activation code '{code_to_delete}' has been deleted.")

@@ -14,6 +14,7 @@ class DevicePage(BasePage):
     DEVICE_ACTIVATION = (By.ID, "deviceItemDeviceActivationLabel")
 
 
+
     def click_manage_your_devices(self):
             self.click(*self.MANAGE_YOUR_DEVICES_BUTTON)
 
