@@ -20,9 +20,7 @@ class TestDevice:
     def test_devices(self, setup):
         self.driver = setup  # Assign the driver from the fixture
 
-        # Navigate to the
-        self.driver.get(Config.URL)
-        logger.info("page opened:" + Config.URL)
+
         # Initialize the LoginPage object with the driver instance
         login_page = LoginPage(self.driver)
         login_page.login_steps("testuser@email.com", "Testuser@1")

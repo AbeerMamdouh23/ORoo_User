@@ -17,9 +17,6 @@ class TestLogout:
 
         self.driver = setup  # Assign the driver from the fixture
 
-        # Navigate to the login page
-        self.driver.get(Config.URL)
-        logger.info("page opened:" + Config.URL)
 
         # Initialize the LoginPage object with the driver instance
         login_page = LoginPage(self.driver)

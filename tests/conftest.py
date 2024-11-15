@@ -13,10 +13,15 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
+from utils.Logger import Logger
+logger_instance = Logger()
+logger = logger_instance.get_logger()
 
 import os
 import logging
 from datetime import datetime
+
+from utils.config import Config
 
 # Create logs directory (if it doesn't exist)
 log_dir = os.path.join(os.getcwd(), "..", "test-output", "logs")
@@ -110,6 +115,8 @@ def setup():
     service = ChromeService(executable_path= ChromeDriverManager().install())  # Using WebDriver Manager for Edge
     driver = webdriver.Chrome(service=service, options=options)
     driver.maximize_window()
+    driver.get(Config.URL)
+    logger.info("page opened:" + Config.URL)
 
     yield driver  # Yield the driver to the tests
     driver.quit()  # Quit the driver after tests
