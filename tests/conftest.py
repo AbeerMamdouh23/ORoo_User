@@ -155,7 +155,7 @@ def setup():
     service = ChromeService(executable_path= ChromeDriverManager().install())  # Using WebDriver Manager for Edge
     driver = webdriver.Chrome(service=service, options=options)
     driver.maximize_window()
-    #driver.get(Config.URL)
+    driver.get(Config.URL)
     logger.info("page opened:" + Config.URL)
 
     yield driver  # Yield the driver to the tests
