@@ -71,23 +71,15 @@ jobs:
             echo "File not found!" && exit 1
           fi
           
+      # Send a report to Slack    
       - uses: MeilCli/slack-upload-file@v4
         with:
           slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
           channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
-          content: 'file'
           file_type: 'html'
-          file_name: 'test-output/allure-report/index.html'
-          title: 'index'
-          initial_comment: 'post by slack-upload-file'
+          file_path: 'test-output/allure-report/index.html'
+          file_name: 'index.html'
+          initial_comment: 'Automation Testing Status'
             
-      # Send a report to Slack
-      - name: Share a file to that channel
-        uses: slackapi/slack-github-action@v2.0.0
-        with:
-          method: files.uploadV2
-          token: ${{ secrets.SLACK_BOT_TOKEN }}
-          payload: |
-            channel: ${{ secrets.SLACK_CHANNEL_ID }}
-            file: "${{ github.workspace }}/test-output/allure-report/index.html"
-            filename: "index.html"
+      
+   
