@@ -26,6 +26,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
       # Install Allure
       - name: Install Allure
         run: |
@@ -36,24 +37,23 @@ jobs:
           sudo ln -sf /opt/allure-2.32.0/bin/allure /usr/local/bin/allure
           echo "Verifying Allure installation..."
           /usr/local/bin/allure --version
-      
 
       # Run Selenium tests
       - name: Run Selenium tests
         run: |
           # Get the absolute path of tests/dummy.py
           DUMMY_TEST_PATH=$(realpath tests/dummy.py)
-  
+
           # Confirm the path for debugging purposes
           echo "Absolute path of dummy.py: $DUMMY_TEST_PATH"
-  
+
           # Run pytest with the absolute path
           python -m pytest $DUMMY_TEST_PATH --disable-warnings
 
-      # Generate Allure Report 
+      # Generate Allure Report
       - name: Generate Allure Report
         run: |
-              allure generate test-output/allure-results -o test-output/allure-report --single-file --clean
+          allure generate test-output/allure-results -o test-output/allure-report --single-file --clean
 
       # Upload test artifacts (e.g., reports)
       - name: Upload test artifacts
@@ -61,7 +61,8 @@ jobs:
         with:
           name: allure-report
           path: test-output/allure-report
-          
+
+      # Check file existence
       - name: Check file existence
         run: |
           if [ -f test-output/allure-report/index.html ]; then
@@ -69,7 +70,12 @@ jobs:
           else
             echo "File not found!" && exit 1
           fi
-          
+
+      # Create a test file to upload
+      - name: Create test file
+        run: echo "This is a test file for Slack upload." > test-file.txt
+
+      # Share Allure Report to Slack
       - name: Share Allure Report to Slack
         uses: slackapi/slack-github-action@v2.0.0
         with:
@@ -78,10 +84,4 @@ jobs:
           payload: |
             channel: ${{ secrets.SLACK_CHANNEL_ID }}
             initial_comment: "Allure report from Selenium Daily Run"
-            echo "This is a test file for Slack upload." > test-file.txt
             file: "test-file.txt"
-            #file: "${{ github.workspace }}/test-output/allure-report/index.html"
-            #filename: "index.html"
-
-
-
