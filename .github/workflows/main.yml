@@ -63,17 +63,14 @@ jobs:
           path: test-output/allure-report
 
       # Send Allure Report (index.html) to Slack
-      - name: Send Allure Report to Slack
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        run: |
-          # File path of the Allure report
-          REPORT_FILE_PATH="test-output/allure-report/index.html"
-          
-          # Send the report to Slack
-          curl -F file=@${REPORT_FILE_PATH} \
-               -F "initial_comment=Allure report from Selenium Daily Run" \
-               -F channels=C082YG41QSZ \
-               -H "Authorization: Bearer ${SLACK_BOT_TOKEN}" \
-               https://slack.com/api/files.upload
+      - name: Share a file to that channel
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          method: files.uploadV2
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_CHANNEL_ID }}
+            initial_comment: "Allure report from Selenium Daily Run"
+            file: "test-output/allure-report/index.html"
+            filename: "allure-report-${{ github.sha }}.html"
 
