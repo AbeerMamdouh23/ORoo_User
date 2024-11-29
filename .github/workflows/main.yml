@@ -69,7 +69,7 @@ jobs:
           else
             echo "File not found!" && exit 1
           fi
-      
+          
       - name: Share Allure Report to Slack
         uses: slackapi/slack-github-action@v2.0.0
         with:
@@ -78,7 +78,8 @@ jobs:
           payload: |
             channel: ${{ secrets.SLACK_CHANNEL_ID }}
             initial_comment: "Allure report from Selenium Daily Run"
-            file: "test-output/allure-report/index.html"
+            file: "${{ github.workspace }}/test-output/allure-report/index.html"
             filename: "index.html"
+
 
 
