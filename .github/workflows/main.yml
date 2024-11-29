@@ -84,5 +84,5 @@ jobs:
           payload: |
             channel: ${{ secrets.SLACK_CHANNEL_ID }}
             initial_comment: "Allure report from Selenium Daily Run"
-            file: "${{ github.workspace }}/test-file.txt"
-            filename: "test-file.txt"
+            file: "${{ github.workspace }}/test-output/allure-report/index.html"
+            filename: "index.html"
