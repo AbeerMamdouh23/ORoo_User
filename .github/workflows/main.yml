@@ -41,8 +41,15 @@ jobs:
       # Run Selenium tests
       - name: Run Selenium tests
         run: |
-          python -m pytest tests\\dummy.py --disable-warnings
-          
+          # Get the absolute path of tests/dummy.py
+          DUMMY_TEST_PATH=$(realpath tests/dummy.py)
+  
+          # Confirm the path for debugging purposes
+          echo "Absolute path of dummy.py: $DUMMY_TEST_PATH"
+  
+          # Run pytest with the absolute path
+          python -m pytest $DUMMY_TEST_PATH --disable-warnings
+
       # Generate Allure Report 
       - name: Generate Allure Report
         run: |
