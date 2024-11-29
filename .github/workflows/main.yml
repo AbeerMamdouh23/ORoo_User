@@ -78,8 +78,10 @@ jobs:
           payload: |
             channel: ${{ secrets.SLACK_CHANNEL_ID }}
             initial_comment: "Allure report from Selenium Daily Run"
-            file: "${{ github.workspace }}/test-output/allure-report/index.html"
-            filename: "index.html"
+            echo "This is a test file for Slack upload." > test-file.txt
+            file: "test-file.txt"
+            #file: "${{ github.workspace }}/test-output/allure-report/index.html"
+            #filename: "index.html"
 
 
 
