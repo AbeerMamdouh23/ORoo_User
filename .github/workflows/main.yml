@@ -70,6 +70,14 @@ jobs:
           else
             echo "File not found!" && exit 1
           fi
+          
+      - name: Check file existence   
+        uses: adrey/slack-file-upload-action@master
+        with:
+              token: ${{ secrets.SLACK_BOT_TOKEN }}
+              path: test-output/allure-report/index.html
+              channel: test
+            
       # Send a report to Slack
       - name: Share a file to that channel
         uses: slackapi/slack-github-action@v2.0.0
