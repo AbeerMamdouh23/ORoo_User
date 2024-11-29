@@ -1,6 +1,7 @@
 name: Selenium Daily Run
 
 on:
+  workflow_dispatch:  # Enables manual triggering of the workflow
   schedule:
     # Runs daily at 00:00 UTC
     - cron: '0 0 * * *'
