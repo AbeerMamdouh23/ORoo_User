@@ -70,30 +70,14 @@ jobs:
           else
             echo "File not found!" && exit 1
           fi
-
-      # Step 1: Get the Upload URL
-      - name: Get Slack Upload URL
-        id: upload_url
-        run: |
-          response=$(curl -X POST \
-              -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
-              -H "Content-Type: application/json" \
-              -d '{
-                  "filename": "index.html",
-                  "filetype": "html",
-                  "channels": "${{ secrets.SLACK_CHANNEL_ID }}"
-              }' \
-              https://slack.com/api/files.getUploadURLExternal)
-          
-          echo "upload_url=$(echo $response | jq -r .upload_url)" >> $GITHUB_ENV
-
-      # Step 2: Upload File to Slack using the URL
-      - name: Upload Allure Report to Slack
-        run: |
-          curl -F "file=@test-output/allure-report/index.html" \
-               -F "initial_comment=Allure report from Selenium Daily Run" \
-               -F "filename=index.html" \
-               -F "channels=${{ secrets.SLACK_CHANNEL_ID }}" \
-               -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
-               ${{ env.upload_url }}
-
+      # Send a report to slack
+      - name: Share a file to that channel
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          method: files.uploadV2
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_CHANNEL_ID }}
+            initial_comment: "the results are in!"
+            file: "results.out"
+            filename: "results-${{ github.sha }}.out"
