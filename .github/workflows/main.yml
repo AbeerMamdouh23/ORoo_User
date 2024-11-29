@@ -85,3 +85,4 @@ jobs:
             channel: ${{ secrets.SLACK_CHANNEL_ID }}
             initial_comment: "Allure report from Selenium Daily Run"
             file: "test-file.txt"
+            filename: "test-file.txt"
