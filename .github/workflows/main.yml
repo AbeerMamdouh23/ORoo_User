@@ -70,7 +70,7 @@ jobs:
           else
             echo "File not found!" && exit 1
           fi
-      # Send a report to slack
+      # Send a report to Slack
       - name: Share a file to that channel
         uses: slackapi/slack-github-action@v2.0.0
         with:
@@ -78,4 +78,5 @@ jobs:
           token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_CHANNEL_ID }}
-            text: "hello"
+            file: "test-output/allure-report/index.html"
+            filename: "index.html"
