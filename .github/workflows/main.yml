@@ -71,18 +71,11 @@ jobs:
             echo "File not found!" && exit 1
           fi
 
-      # Create a test file to upload
-      - name: Create test file
-        run: echo "This is a test file for Slack upload." > test-file.txt
-
       # Share Allure Report to Slack
-      - name: Share Allure Report to Slack
-        uses: slackapi/slack-github-action@v2.0.0
-        with:
-          method: files.uploadV2
-          token: ${{ secrets.SLACK_BOT_TOKEN }}
-          payload: |
-            channel: ${{ secrets.SLACK_CHANNEL_ID }}
-            initial_comment: "Allure report from Selenium Daily Run"
-            file: "${{ github.workspace }}/test-output/allure-report/index.html"
-            filename: "index.html"
+      - name: Upload a file to Slack
+        run: >
+          curl -F file=@test-output/allure-report/index.html
+          -F "initial_comment=Automation Status"
+          -F channels=test
+          -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}"
+          https://slack.com/api/files.upload
