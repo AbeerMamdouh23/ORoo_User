@@ -61,7 +61,16 @@ jobs:
         with:
           name: allure-report
           path: test-output/allure-report
-
+          
+      - name: Post to a Slack channel
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_CHANNEL_ID }}
+            text: "howdy <@channel>!"
+      
       # Send Allure Report (index.html) to Slack
       - name: Share a file to that channel
         uses: slackapi/slack-github-action@v2.0.0
