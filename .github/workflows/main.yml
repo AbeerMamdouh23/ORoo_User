@@ -71,12 +71,15 @@ jobs:
             echo "File not found!" && exit 1
           fi
           
-      - name: Check file existence   
-        uses: adrey/slack-file-upload-action@master
+      - uses: MeilCli/slack-upload-file@v4
         with:
-              token: ${{ secrets.SLACK_BOT_TOKEN }}
-              path: test-output/allure-report/index.html
-              channel: test
+          slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          content: 'file'
+          file_type: 'html'
+          file_name: 'test-output/allure-report/index.html'
+          title: 'index'
+          initial_comment: 'post by slack-upload-file'
             
       # Send a report to Slack
       - name: Share a file to that channel
