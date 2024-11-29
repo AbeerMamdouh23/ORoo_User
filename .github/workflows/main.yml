@@ -26,16 +26,18 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      # Install dependencies   
+      # Install Allure
       - name: Install Allure
         run: |
           sudo apt-get update
           sudo apt-get install -y default-jre
           curl -sLo allure.tgz https://github.com/allure-framework/allure2/releases/download/2.32.0/allure-2.32.0.tgz
           tar -xzvf allure.tgz -C /opt/
-          sudo ln -s /opt/allure-2.32.00/bin/allure /usr/local/bin/allure
-          allure --version
-          
+          sudo ln -sf /opt/allure-2.32.0/bin/allure /usr/local/bin/allure
+          echo "Verifying Allure installation..."
+          /usr/local/bin/allure --version
+      
+
       # Run Selenium tests
       - name: Run Selenium tests
         run: |
