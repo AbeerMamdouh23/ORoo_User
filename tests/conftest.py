@@ -14,9 +14,11 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from utils.Logger import Logger
+import os
+import subprocess
+import pytest
 logger_instance = Logger()
 logger = logger_instance.get_logger()
-
 import os
 import logging
 from datetime import datetime
@@ -115,14 +117,33 @@ def clean_report():
         shutil.rmtree(allure_results_dir)
     os.makedirs(allure_results_dir)
 
-"""def pytest_sessionfinish (session, exitstatus):
-    allure_results_dir = "test-output/allure-results"
-    if os.path.exists(allure_results_dir):
-        subprocess.run(['where', 'allure'])  # For Windows; use 'which allure' for Linux/Mac
-        # Just generate the Allure report (without opening the browser)
-        subprocess.Popen(['allure.bat', 'generate', allure_results_dir, '-o', 'test-output/allure-report'])
-        print("Allure report generated in 'allure-report' directory.")
-"""
+
+
+# def pytest_sessionfinish(session, exitstatus):
+#     """Hook to generate the Allure report after the test session finishes."""
+#     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+#     allure_results_dir = os.path.join(project_root, "test-output", "allure-results")
+#     allure_report_dir = os.path.join(project_root, "test-output", "allure-report")
+#
+#     if os.path.exists(allure_results_dir):
+#         try:
+#             # Generate the Allure report
+#             result = subprocess.run(
+#                 [r'C:\Users\Amr\scoop\apps\allure\2.32.0\bin\allure.bat', 'generate', allure_results_dir, '-o',
+#                  allure_report_dir,'--single-file', '--clean'],
+#                 check=True,
+#                 capture_output=True,
+#                 text=True
+#             )
+#             print(f"Allure report generated successfully:\n{result.stdout}")
+#         except subprocess.CalledProcessError as e:
+#             print(f"Failed to generate Allure report:\n{e.stderr}")
+#         except FileNotFoundError:
+#             print("Error: 'allure' command not found. Ensure Allure is installed and added to your PATH.")
+#     else:
+#         print(f"Allure results directory does not exist: {allure_results_dir}")
+
+
 @pytest.fixture(scope="function")
 def setup():
     # Set up Chrome WebDriver using WebDriverManager
@@ -133,7 +154,7 @@ def setup():
     service = ChromeService(executable_path= ChromeDriverManager().install())  # Using WebDriver Manager for Edge
     driver = webdriver.Chrome(service=service, options=options)
     driver.maximize_window()
-    driver.get(Config.URL)
+    #driver.get(Config.URL)
     logger.info("page opened:" + Config.URL)
 
     yield driver  # Yield the driver to the tests
