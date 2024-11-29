@@ -74,8 +74,10 @@ jobs:
       # Share Allure Report to Slack
       - name: Upload a file to Slack
         run: >
-          curl -F file=@test-output/allure-report/index.html
-          -F "initial_comment=Automation Status"
-          -F channels=test
-          -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}"
-          https://slack.com/api/files.upload
+          curl -F "file=@test-output/allure-report/index.html" \
+               -F "initial_comment=Automation Status" \
+               -F "channels=test" \
+               -F "filename=index.html" \
+               -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
+               https://slack.com/api/files.uploadV2
+
