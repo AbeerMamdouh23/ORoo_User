@@ -61,9 +61,19 @@ jobs:
         with:
           name: allure-report
           path: test-output/allure-report
+          
+      - name: Debug:Check file existence
+        run: |
+          if [ -f test-output/allure-report/index.html ]; then
+            echo "File exists: test-output/allure-report/index.html"
+          else
+            echo "File not found!" && exit 1
+          fi
       
-      # Send Allure Report (index.html) to Slack
-      - name: Share a file to that channel
+      - name: Debug:Check file content
+        run: cat test-output/allure-report/index.html
+      
+      - name: Share Allure Report to Slack
         uses: slackapi/slack-github-action@v2.0.0
         with:
           method: files.uploadV2
@@ -71,6 +81,7 @@ jobs:
           payload: |
             channel: ${{ secrets.SLACK_CHANNEL_ID }}
             initial_comment: "Allure report from Selenium Daily Run"
-            file: "realpath test-output/allure-report/index.html"
+            file: "test-output/allure-report/index.html"
             filename: "allure-report-${{ github.sha }}.html"
+
 
