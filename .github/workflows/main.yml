@@ -41,7 +41,7 @@ jobs:
       # Run Selenium tests
       - name: Run Selenium tests
         run: |
-          python -m pytest tests\dummy.py --disable-warnings
+          python -m pytest tests\\dummy.py --disable-warnings
           
       # Generate Allure Report 
       - name: Generate Allure Report
