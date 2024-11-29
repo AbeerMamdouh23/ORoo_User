@@ -11,11 +11,7 @@ import shutil
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.edge.service import Service as EdgeService
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from utils.Logger import Logger
-import os
-import subprocess
 import pytest
 logger_instance = Logger()
 logger = logger_instance.get_logger()
@@ -149,7 +145,12 @@ def setup():
     # Set up Chrome WebDriver using WebDriverManager
     options = webdriver.ChromeOptions()
     # Add options if needed, for example:
-    options.add_argument("--headless")  # Uncomment for headless mode
+    # Add arguments to run Chrome headlessly and solve DevToolsActivePort issue
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")  # Needed for some CI environments like GitHub Actions
+    options.add_argument("--disable-dev-shm-usage")  # Prevent crash due to limited memory in CI
+    options.add_argument("--disable-gpu")  # Disable GPU hardware acceleration
+    options.add_argument("--remote-debugging-port=9222")  # Set the debugging port if necessary
     options.add_argument("--ignore-certificate-errors")
     service = ChromeService(executable_path= ChromeDriverManager().install())  # Using WebDriver Manager for Edge
     driver = webdriver.Chrome(service=service, options=options)
