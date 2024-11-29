@@ -74,10 +74,8 @@ jobs:
       - name: Share a file to that channel
         uses: slackapi/slack-github-action@v2.0.0
         with:
-          method: files.uploadV2
+          method: chat.postMessage
           token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_CHANNEL_ID }}
-            initial_comment: "the results are in!"
-            file: "results.out"
-            filename: "results-${{ github.sha }}.out"
+            text: "hello"
