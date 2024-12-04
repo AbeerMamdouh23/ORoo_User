@@ -68,13 +68,14 @@ jobs:
       # Send a report to Slack  
 
       # Send a text message to Slack
-      - name: Send a text message to Slack
-        run: |
-           curl -X POST \
-                -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
-                -H "Content-Type: application/json" \
-                -d '{"channel": "${{ secrets.SLACK_CHANNEL_ID }}", "text": "Automation Testing Status"}' \
-                 https://slack.com/api/chat.postMessage
+      - uses: MeilCli/slack-upload-file@v4
+        with:
+          slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          file_type: 'text'
+          file_path: 'test-file.txt'
+          file_name: 'Test.txt'
+          initial_comment: 'Automation Testing Status'
 
   
             
