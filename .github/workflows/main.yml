@@ -65,15 +65,18 @@ jobs:
             echo "File not found!" && exit 1
           fi
           
-      # Send a report to Slack    
-      - uses: MeilCli/slack-upload-file@v4
-        with:
-          slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
-          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
-          file_type: 'html'
-          file_path: 'test-output/allure-report/index.html'
-          file_name: 'index.html'
-          initial_comment: 'Automation Testing Status'
+      # Send a report to Slack  
+
+      # Send a text message to Slack
+      - name: Send a text message to Slack
+        run: |
+           curl -X POST \
+                -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
+                -H "Content-Type: application/json" \
+                -d '{"channel": "${{ secrets.SLACK_CHANNEL_ID }}", "text": "Automation Testing Status"}' \
+                 https://slack.com/api/chat.postMessage
+
+  
             
       
    
