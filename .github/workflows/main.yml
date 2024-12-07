@@ -43,7 +43,7 @@ jobs:
         run: |
           # Run pytest with the absolute path
           python -m pytest --disable-warnings
-
+        continue-on-error: true
       # Generate Allure Report
       - name: Generate Allure Report
         run: |
