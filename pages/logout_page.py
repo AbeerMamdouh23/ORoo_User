@@ -6,10 +6,13 @@ class LogOutPage(BasePage):
     def __init__(self, driver):
         self.driver = driver
 
-    LOG_OUT_BUTTON = (By.ID, "navbarLogOutButton")
+    PROFILE_AVATAR = (By.ID, "headerImagesAvatar")
+    LOG_OUT_BUTTON = (By.ID, "profileProfileLogOutButton")
     LOGIN_BUTTON = (By.ID, "loginFormLoginButton")
 
 
+    def click_profile_button(self):
+        self.click(*self.PROFILE_AVATAR)
 
     def click_logout_button(self):
         self.click(*self.LOG_OUT_BUTTON)

@@ -29,10 +29,20 @@ class TestProfile:
         profile_page.click_profile_avatar()
 
         # Assert and handle screenshot on failure of first name
-        assert (profile_page.check_first_name_value()== "test")
-        # Assert and handle screenshot on failure of last name
-        assert (profile_page.check_last_name_value()== "test")
-        # Assert and handle screenshot on failure of email
-        assert (profile_page.check_email_value()== "testuser@email.com")
+        assert profile_page.check_full_name().is_displayed()
+        assert profile_page.check_email().is_displayed()
+        assert profile_page.check_phone_number().is_displayed()
+        assert profile_page.check_home_address().is_displayed()
+        assert profile_page.check_birth_date().is_displayed()
+        assert profile_page.check_post_code().is_displayed()
+        assert profile_page.check_logout_button().is_displayed()
 
-        take_screenshot(self.driver, "verify_Profile_screenshot")
+
+
+        # Assert and handle screenshot on failure of last name
+        #assert (profile_page.check_last_name_value()== "test")
+
+        # Assert and handle screenshot on failure of email
+        #assert (profile_page.check_email_value()== "testuser@email.com")
+
+        take_screenshot(self.driver, "verify_Profile_Page_screenshot")

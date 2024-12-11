@@ -7,23 +7,12 @@ from pages.base_page import BasePage
 class ActivationPage(BasePage):
     def __init__(self, driver):
         self.driver = driver
-    MANAGE_YOUR_DEVICES_BUTTON = (By.ID, "navbarDeviceItemSelected")
-    ACTIVATE_YOUR_DEVICE_BUTTON_NO_DEVICES = (By.ID, "dashboardItemsButton")
-    ACTIVATE_YOUR_DEVICE_BUTTON_EXISTING_DEVICES = (By.ID, "devicesActivateButton")
+
     ACTIVATION_CODE_FIELD = (By.ID, "activationItemCode")
-    ACTIVATION_BUTTON = (By.ID, "activationItemButton")
+    ACTIVATE_NOW_BUTTON = (By.ID, "activationItemButton")
     SUCCESS_MESSAGE = (By.ID, "activationMessage")
     ERROR_MESSAGE = (By.ID, "activationErrorMessage")
 
-    def click_manage_devices_button(self):
-        self.click(*self.MANAGE_YOUR_DEVICES_BUTTON)
-
-    def click_activation_button_no_devices(self):
-        self.click(*self.ACTIVATE_YOUR_DEVICE_BUTTON_NO_DEVICES)
-
-
-    def click_activation_button_existing_devices(self):
-        self.click(*self.ACTIVATE_YOUR_DEVICE_BUTTON_EXISTING_DEVICES)
 
 
     def enter_activation_code(self, activation_code):
@@ -31,7 +20,7 @@ class ActivationPage(BasePage):
 
 
     def click_activate_button(self):
-        self.click(*self.ACTIVATION_BUTTON)
+        self.click(*self.ACTIVATE_NOW_BUTTON)
 
 
     def get_success_message(self):

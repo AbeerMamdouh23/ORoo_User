@@ -8,11 +8,11 @@ class LoginPage(BasePage):
     def __init__(self, driver):
         self.driver = driver
 
-    EMAIL_FIELD = (By.ID, "loginFormEmailAddress")
-    PASSWORD_FIELD = (By.ID, "loginFormPassword")
-    LOGIN_BUTTON = (By.CLASS_NAME, "login_formButtons__3UJaC")
+    EMAIL_FIELD = (By.ID, "loginFormEmailInput")
+    PASSWORD_FIELD = (By.ID, "loginFormPasswordInput")
+    LOGIN_BUTTON = (By.ID, "loginFormLoginButton")
     ERROR_MESSAGE = (By.ID, "loginFormErrorMessage")
-    DASHBOARD_TEXT = (By.ID, "navbarContainerTitle")
+    HOME_TEXT = (By.ID, "activationLine1")
 
     def enter_email(self, email):
         self.send_text(email, *self.EMAIL_FIELD)
@@ -31,5 +31,5 @@ class LoginPage(BasePage):
     def get_error_message(self):
         return self.get_text(*self.ERROR_MESSAGE)
 
-    def get_dashboard_text(self):
-        return self.find_element(*self.DASHBOARD_TEXT)
+    def get_home_text(self):
+        return self.find_element(*self.HOME_TEXT)

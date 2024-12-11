@@ -32,7 +32,7 @@ class TestLogin:
         login_page.click_login()
 
         # Assert and handle screenshot on failure
-        assert login_page.get_dashboard_text().is_displayed()
+        assert login_page.get_home_text().is_displayed()
         take_screenshot(self.driver, "valid_login_screenshot")
 
 
