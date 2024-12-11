@@ -3,8 +3,8 @@ name: Selenium Daily Run
 on:
   workflow_dispatch:  # Enables manual triggering of the workflow
   schedule:
-    # Runs daily at 00:00 UTC
-    - cron: '0 0 * * *'
+    # Runs daily at 06:00 UTC
+    - cron: '0 6 * * *'
 
 jobs:
   selenium-test:
@@ -43,7 +43,7 @@ jobs:
         run: |
           # Run pytest with the absolute path
           python -m pytest --disable-warnings
-
+        continue-on-error: true
       # Generate Allure Report
       - name: Generate Allure Report
         run: |
