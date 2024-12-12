@@ -53,14 +53,14 @@ jobs:
           esac
           echo "Using BASE_URL: $BASE_URL"
           
-        # Set the environment variables for test results and allure directories
+          # Set the environment variables for test results and allure directories
           TEST_RESULTS="test-output/results_${TEST_ENV}.xml"
           ALLURE_RESULTS="test-output/allure-results/${TEST_ENV}"
       
-        # Export BASE_URL so it can be accessed during tests
+          # Export BASE_URL so it can be accessed during tests
           export BASE_URL
       
-        # Run pytest with the necessary directories
+          # Run pytest with the necessary directories
           pytest tests/ --junitxml="${TEST_RESULTS}" --alluredir="${ALLURE_RESULTS}" || true
 
 
@@ -68,7 +68,7 @@ jobs:
       # Generate Allure Report for the respective environment
       - name: Generate Allure Report for ${{ matrix.env_name }}
         run: |
-          allure generate test-output/allure-results/${{ matrix.env_name }} -o test-output/allure-report-${{ matrix.env_name }} --single-file --clean  || true
+          allure generate test-output/allure-results/${{ matrix.env_name }} -o test-output/allure-report-${{ matrix.env_name }} --single-file --clean || true
 
       # Rename Allure report index.html
       - name: Rename Allure Report for ${{ matrix.env_name }}
