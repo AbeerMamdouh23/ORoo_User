@@ -7,11 +7,8 @@ on:
     - cron: '0 6 * * *'
 
 jobs:
-  selenium-test:
+  selenium-test-and-report:
     runs-on: ubuntu-latest
-    strategy: 
-      matrix: 
-        env_name: [dev, staging, production] # Dynamically loop through environments
     steps:
       # Checkout the repository
       - name: Checkout code
@@ -39,54 +36,45 @@ jobs:
           sudo ln -sf /opt/allure-2.32.0/bin/allure /usr/local/bin/allure
           echo "Verifying Allure installation..."
           /usr/local/bin/allure --version
-      # Run Selenium tests 
-      - name: Run tests for ${{ matrix.env_name }} 
-        env: 
-          TEST_ENV: ${{ matrix.env_name }} # Set environment dynamically 
-        run: | 
-          echo "Running tests in $TEST_ENV" 
-          # Change the base URL dynamically 
-          if [ "$TEST_ENV" == "dev" ]; then 
-            export BASE_URL="https://user.dev-ooro.co.uk/" 
-          elif [ "$TEST_ENV" == "staging" ]; then 
-              export BASE_URL="https://user.staging-ooro.co.uk" 
-          elif [ "$TEST_ENV" == "production" ]; then 
-            export BASE_URL="https://user.ooro.co.uk" 
-          fi 
-          
-          echo "Using BASE_URL: $BASE_URL" 
-          # Pass the base URL to the test script 
-          pytest tests/ --junitxml="results_${TEST_ENV}.xml" || true    
-        continue-on-error: true
-          
-      # Generate Allure report for the respective environment
-      - name: Generate Allure Report for ${{ matrix.env_name }}
-        run: |
-         allure generate test-output/allure-results -o test-output/allure-report-${{ matrix.env_name }} --single-file --clean
 
-      # Upload Allure report artifacts for the respective environment
-      - name: Upload Allure report artifacts for ${{ matrix.env_name }}
+      # Run tests for all environments sequentially
+      - name: Run Selenium Tests and Generate Reports
+        run: |
+          for ENV in dev staging production; do
+            echo "Running tests in $ENV environment"
+            
+            # Set the base URL dynamically
+            case "$ENV" in
+              "dev") BASE_URL="https://user.dev-ooro.co.uk/" ;;
+              "staging") BASE_URL="https://user.staging-ooro.co.uk/" ;;
+              "production") BASE_URL="https://user.ooro.co.uk/" ;;
+            esac
+            echo "Using BASE_URL: $BASE_URL"
+            
+            # Run tests and handle failures gracefully
+            TEST_RESULTS="test-output/results_${ENV}.xml"
+            ALLURE_RESULTS="test-output/allure-results/${ENV}"
+            pytest tests/ --junitxml="${TEST_RESULTS}" --alluredir="${ALLURE_RESULTS}" || true
+            
+            # Generate Allure report
+            ALLURE_REPORT="test-output/allure-report-${ENV}"
+            allure generate "${ALLURE_RESULTS}" -o "${ALLURE_REPORT}" --clean || true
+            
+            # Validate report existence
+            if [ ! -f "${ALLURE_REPORT}/index.html" ]; then
+              echo "Allure report for $ENV not found!" && exit 1
+            fi
+          done
+
+      # Upload Allure reports as artifacts
+      - name: Upload Allure Reports
         uses: actions/upload-artifact@v3
         with:
-           name: allure-report-${{ matrix.env_name }}
-           path: test-output/allure-report-${{ matrix.env_name }}
+          name: allure-reports
+          path: test-output/allure-report-*/
 
-    # Check if the Allure report exists
-      - name: Check Allure report existence for ${{ matrix.env_name }}
-        run: |
-           if [ -f test-output/allure-report-${{ matrix.env_name }}/index.html ]; then
-             echo "Allure report for ${{ matrix.env_name }} exists"
-           else
-             echo "Allure report for ${{ matrix.env_name }} not found!" && exit 1
-           fi
-
-  # Upload all reports after tests are done
-  upload-reports:
-    runs-on: ubuntu-latest
-    needs: selenium-test  # Wait until the selenium-test job is finished
-    steps:
-      # Send Allure reports to Slack for all environments
-      - name: Send Allure reports to Slack
+      # Send Allure reports to Slack
+      - name: Send Allure Reports to Slack
         uses: MeilCli/slack-upload-file@v4
         with:
           slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
