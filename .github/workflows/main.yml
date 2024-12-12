@@ -55,8 +55,6 @@ jobs:
           TEST_RESULTS="test-output/results_${TEST_ENV}.xml"
           ALLURE_RESULTS="test-output/allure-results/${TEST_ENV}"
           pytest tests/ --junitxml="${TEST_RESULTS}" --alluredir="${ALLURE_RESULTS}" || true
-      # Export BASE_URL so it can be accessed during the tests
-          export BASE_URL
 
       # Generate Allure Report for the respective environment
       - name: Generate Allure Report for ${{ matrix.env_name }}
