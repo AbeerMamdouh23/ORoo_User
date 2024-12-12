@@ -77,6 +77,9 @@ jobs:
   # Consolidate and send reports to Slack after all tests complete
   send-reports:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env_name: [ dev, staging, production ] # Run tests for each environment in parallel
     needs: selenium-test  # Wait for all selenium-test jobs to complete
     steps:
       # Checkout the repository
