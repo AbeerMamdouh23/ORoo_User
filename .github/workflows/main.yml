@@ -9,7 +9,9 @@ on:
 jobs:
   selenium-test:
     runs-on: ubuntu-latest
-
+    strategy: 
+      matrix: 
+        env_name: [DEV, STAGING, PRODUCTION] # Dynamically loop through environments
     steps:
       # Checkout the repository
       - name: Checkout code
@@ -37,13 +39,25 @@ jobs:
           sudo ln -sf /opt/allure-2.32.0/bin/allure /usr/local/bin/allure
           echo "Verifying Allure installation..."
           /usr/local/bin/allure --version
-
-      # Run Selenium tests
-      - name: Run Selenium tests
-        run: |
-          # Run pytest with the absolute path
-          python -m pytest --disable-warnings
-        continue-on-error: true
+      # Run Selenium tests 
+      - name: Run tests for ${{ matrix.env_name }} 
+        env: 
+          TEST_ENV: ${{ matrix.env_name }} # Set environment dynamically 
+        run: | 
+          echo "Running tests in $TEST_ENV" 
+          # Change the base URL dynamically 
+          if [ "$TEST_ENV" == "DEV" ]; then 
+            export BASE_URL="https://user.dev-ooro.co.uk/" 
+          elif [ "$TEST_ENV" == "STAGING" ]; then 
+              export BASE_URL="https://user.staging-ooro.co.uk" 
+          elif [ "$TEST_ENV" == "PRODUCTION" ]; then 
+            export BASE_URL="https://user.ooro.co.uk" 
+          fi 
+          
+          echo "Using BASE_URL: $BASE_URL" 
+          # Pass the base URL to the test script 
+          pytest tests/ --junitxml="results_${TEST_ENV}.xml" || true    
+          continue-on-error: true
       # Generate Allure Report
       - name: Generate Allure Report
         run: |
