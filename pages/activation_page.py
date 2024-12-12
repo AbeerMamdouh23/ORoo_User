@@ -10,7 +10,7 @@ class ActivationPage(BasePage):
 
     ACTIVATION_CODE_FIELD = (By.ID, "activationItemCode")
     ACTIVATE_NOW_BUTTON = (By.ID, "activationItemButton")
-    SUCCESS_MESSAGE = (By.ID, "activationMessage")
+    SUCCESS_MESSAGE = (By.ID, "activatedDeviceTextLine1")
     ERROR_MESSAGE = (By.ID, "activationErrorMessage")
 
 

@@ -140,6 +140,10 @@ def clean_report():
 #         print(f"Allure results directory does not exist: {allure_results_dir}")
 
 
+@pytest.fixture(scope="session")
+def base_url():
+    return Config.URL
+
 @pytest.fixture(scope="function")
 def setup():
     # Set up Chrome WebDriver using WebDriverManager
