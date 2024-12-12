@@ -80,13 +80,28 @@ jobs:
              echo "Allure report for ${{ matrix.env_name }} not found!" && exit 1
            fi
 
-    # Send the Allure report to Slack
-      - name: Send Allure report to Slack for ${{ matrix.env_name }}
+  # Upload all reports after tests are done
+  upload-reports:
+    runs-on: ubuntu-latest
+    needs: selenium-test  # Wait until the selenium-test job is finished
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Send Allure reports to Slack for all environments
+      - name: Send Allure reports to Slack
         uses: MeilCli/slack-upload-file@v4
         with:
-           slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
-           channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
-           file_type: 'html'
-           file_path: 'test-output/allure-report-${{ matrix.env_name }}/index.html'
-           file_name: '${{ matrix.env_name }}-report.html'
-           initial_comment: "Automation Testing Status for ${{ matrix.env_name }}"
+          slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          file_type: 'html'
+          file_path: |
+            test-output/allure-report-dev/index.html
+            test-output/allure-report-staging/index.html
+            test-output/allure-report-production/index.html
+          file_name: |
+            allure-report-dev.html
+            allure-report-staging.html
+            allure-report-production.html
+          initial_comment: 'Automation Testing Status: Reports for all environments'
