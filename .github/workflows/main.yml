@@ -60,33 +60,33 @@ jobs:
         continue-on-error: true
           
       # Generate Allure report for the respective environment
-      - name: Generate Allure Report for ${{ matrix.environment }}
+      - name: Generate Allure Report for ${{ matrix.env_name }}
         run: |
-         allure generate test-output/allure-results -o test-output/allure-report-${{ matrix.environment }} --single-file --clean
+         allure generate test-output/allure-results -o test-output/allure-report-${{ matrix.env_name }} --single-file --clean
 
       # Upload Allure report artifacts for the respective environment
-      - name: Upload Allure report artifacts for ${{ matrix.environment }}
+      - name: Upload Allure report artifacts for ${{ matrix.env_name }}
         uses: actions/upload-artifact@v3
         with:
-           name: allure-report-${{ matrix.environment }}
-           path: test-output/allure-report-${{ matrix.environment }}
+           name: allure-report-${{ matrix.env_name }}
+           path: test-output/allure-report-${{ matrix.env_name }}
 
     # Check if the Allure report exists
-      - name: Check Allure report existence for ${{ matrix.environment }}
+      - name: Check Allure report existence for ${{ matrix.env_name }}
         run: |
-           if [ -f test-output/allure-report-${{ matrix.environment }}/index.html ]; then
-             echo "Allure report for ${{ matrix.environment }} exists"
+           if [ -f test-output/allure-report-${{ matrix.env_name }}/index.html ]; then
+             echo "Allure report for ${{ matrix.env_name }} exists"
            else
-             echo "Allure report for ${{ matrix.environment }} not found!" && exit 1
+             echo "Allure report for ${{ matrix.env_name }} not found!" && exit 1
            fi
 
     # Send the Allure report to Slack
-      - name: Send Allure report to Slack for ${{ matrix.environment }}
+      - name: Send Allure report to Slack for ${{ matrix.env_name }}
         uses: MeilCli/slack-upload-file@v4
         with:
            slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
            channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
            file_type: 'html'
-           file_path: 'test-output/allure-report-${{ matrix.environment }}/index.html'
-           file_name: 'index.html'
-           initial_comment: "Automation Testing Status for ${{ matrix.environment }}"
+           file_path: 'test-output/allure-report-${{ matrix.env_name }}/index.html'
+           file_name: '${{ matrix.env_name }}-report.html'
+           initial_comment: "Automation Testing Status for ${{ matrix.env_name }}"
