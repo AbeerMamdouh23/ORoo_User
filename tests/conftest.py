@@ -141,12 +141,12 @@ def clean_report():
 
 
 @pytest.fixture(scope="session")
-def base_url():
-    url = os.getenv("BASE_URL","https://user.dev-ooro.co.uk/")
-    return url
+def URL():
+    return os.getenv("BASE_URL","https://user.dev-ooro.co.uk/")
+
 
 @pytest.fixture(scope="function")
-def setup(url):
+def setup(URL):
     # Set up Chrome WebDriver using WebDriverManager
     options = webdriver.ChromeOptions()
     # Add options if needed, for example:
@@ -160,8 +160,8 @@ def setup(url):
     service = ChromeService(executable_path= ChromeDriverManager().install())  # Using WebDriver Manager for Edge
     driver = webdriver.Chrome(service=service, options=options)
     driver.maximize_window()
-    driver.get(url)
-    logger.info("page opened:" +url)
+    driver.get(URL)
+    logger.info("page opened:" +URL)
 
     yield driver  # Yield the driver to the tests
     driver.quit()  # Quit the driver after tests
