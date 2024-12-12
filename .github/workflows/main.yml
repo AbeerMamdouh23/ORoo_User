@@ -68,7 +68,7 @@ jobs:
       # Generate Allure Report for the respective environment
       - name: Generate Allure Report for ${{ matrix.env_name }}
         run: |
-          allure generate test-output/allure-results/${{ matrix.env_name }} -o test-output/allure-report-${{ matrix.env_name }} --clean --single-file || true
+          allure generate test-output/allure-results/${{ matrix.env_name }} -o test-output/allure-report-${{ matrix.env_name }} --single-file --clean  || true
 
       # Rename Allure report index.html
       - name: Rename Allure Report for ${{ matrix.env_name }}
