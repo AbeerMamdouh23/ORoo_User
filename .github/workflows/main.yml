@@ -58,46 +58,35 @@ jobs:
           # Pass the base URL to the test script 
           pytest tests/ --junitxml="results_${TEST_ENV}.xml" || true    
         continue-on-error: true
-      # Generate Allure Report
-      - name: Generate Allure Report
+          
+      # Generate Allure report for the respective environment
+      - name: Generate Allure Report for ${{ matrix.environment }}
         run: |
-          allure generate test-output/allure-results -o test-output/allure-report --single-file --clean
+         allure generate test-output/allure-results -o test-output/allure-report-${{ matrix.environment }} --single-file --clean
 
-      # Upload test artifacts (e.g., reports)
-      - name: Upload test artifacts
+      # Upload Allure report artifacts for the respective environment
+      - name: Upload Allure report artifacts for ${{ matrix.environment }}
         uses: actions/upload-artifact@v3
         with:
-          name: allure-report
-          path: test-output/allure-report
+           name: allure-report-${{ matrix.environment }}
+           path: test-output/allure-report-${{ matrix.environment }}
 
-      # Check file existence
-      - name: Check file existence
+    # Check if the Allure report exists
+      - name: Check Allure report existence for ${{ matrix.environment }}
         run: |
-          if [ -f test-output/allure-report/index.html ]; then
-            echo "File exists: test-output/allure-report/index.html"
-          else
-            echo "File not found!" && exit 1
-          fi
-          
+           if [ -f test-output/allure-report-${{ matrix.environment }}/index.html ]; then
+             echo "Allure report for ${{ matrix.environment }} exists"
+           else
+             echo "Allure report for ${{ matrix.environment }} not found!" && exit 1
+           fi
 
-      # Send a report to Slack
-      - uses: MeilCli/slack-upload-file@v4
+    # Send the Allure report to Slack
+      - name: Send Allure report to Slack for ${{ matrix.environment }}
+        uses: MeilCli/slack-upload-file@v4
         with:
-          slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
-          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
-          file_type: 'html'
-          file_path: 'test-output/allure-report/index.html'
-          file_name: 'index.html'
-          initial_comment: 'Automation Testing Status'
-
-
-
-
-
-
-
-
-  
-            
-      
-   
+           slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
+           channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+           file_type: 'html'
+           file_path: 'test-output/allure-report-${{ matrix.environment }}/index.html'
+           file_name: 'index.html'
+           initial_comment: "Automation Testing Status for ${{ matrix.environment }}"
