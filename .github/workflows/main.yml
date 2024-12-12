@@ -55,43 +55,24 @@ jobs:
           
           # Set the environment variables for test results and allure directories
           TEST_RESULTS="test-output/results_${TEST_ENV}.xml"
-          ALLURE_RESULTS="test-output/allure-results/${TEST_ENV}"
-          
+      
           # Export BASE_URL so it can be accessed during tests
           export BASE_URL
-          
+      
           # Run pytest with the necessary directories
-          pytest tests/ --junitxml="${TEST_RESULTS}" --alluredir="${ALLURE_RESULTS}" || true
+          pytest tests/ --junitxml="${TEST_RESULTS}"  || true
 
-      # Verify pytest results are generated
-      - name: Verify pytest results are generated
-        run: |
-          if [ ! -f test-output/allure-results/${{ matrix.env_name }}/*.xml ]; then
-            echo "No test results found for ${{ matrix.env_name }}!" && exit 1
-          else
-            echo "Test results found for ${{ matrix.env_name }}"
-          fi
 
-      # List contents of allure-results directory
-      - name: List contents of allure-results directory
-        run: |
-          echo "Listing contents of allure-results for ${{ matrix.env_name }}"
-          ls -la test-output/allure-results/${{ matrix.env_name }}
 
       # Generate Allure Report for the respective environment
       - name: Generate Allure Report for ${{ matrix.env_name }}
         run: |
-          echo "Generating Allure report for ${{ matrix.env_name }}"
-          allure generate test-output/allure-results/${{ matrix.env_name }} -o test-output/allure-report-${{ matrix.env_name }} --single-file --clean || true
+          allure generate test-output/allure-results -o test-output/allure-report-${{ matrix.env_name }} --single-file --clean || true
 
       # Rename Allure report index.html
       - name: Rename Allure Report for ${{ matrix.env_name }}
         run: |
-          if [ -f test-output/allure-report-${{ matrix.env_name }}/index.html ]; then
-            mv test-output/allure-report-${{ matrix.env_name }}/index.html test-output/allure-report-${{ matrix.env_name }}/allure-report-${{ matrix.env_name }}.html
-          else
-            echo "Allure report not found for ${{ matrix.env_name }}!" && exit 1
-          fi
+          mv test-output/allure-report-${{ matrix.env_name }}/index.html test-output/allure-report-${{ matrix.env_name }}/allure-report-${{ matrix.env_name }}.html
 
       # Upload Allure report artifacts for the respective environment
       - name: Upload Allure Report for ${{ matrix.env_name }}
@@ -99,6 +80,7 @@ jobs:
         with:
           name: allure-report-${{ matrix.env_name }}
           path: test-output/allure-report-${{ matrix.env_name }}
+
 
   # Consolidate and send reports to Slack after all tests complete
   send-reports:
@@ -140,3 +122,4 @@ jobs:
             allure-report-staging.html
             allure-report-production.html
           initial_comment: 'Automation Testing Status: Reports for all environments'
+
