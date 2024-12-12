@@ -7,8 +7,11 @@ on:
     - cron: '0 6 * * *'
 
 jobs:
-  selenium-test-and-report:
+  selenium-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env_name: [dev, staging, production] # Run tests for each environment in parallel
     steps:
       # Checkout the repository
       - name: Checkout code
@@ -37,41 +40,66 @@ jobs:
           echo "Verifying Allure installation..."
           /usr/local/bin/allure --version
 
-      # Run tests for all environments sequentially
-      - name: Run Selenium Tests and Generate Reports
+      # Run Selenium tests for the specified environment
+      - name: Run tests for ${{ matrix.env_name }}
+        env:
+          TEST_ENV: ${{ matrix.env_name }}
+        run: |
+          echo "Running tests in $TEST_ENV"
+          case "$TEST_ENV" in
+            "dev") BASE_URL="https://user.dev-ooro.co.uk/" ;;
+            "staging") BASE_URL="https://user.staging-ooro.co.uk/" ;;
+            "production") BASE_URL="https://user.ooro.co.uk/" ;;
+          esac
+          echo "Using BASE_URL: $BASE_URL"
+          TEST_RESULTS="test-output/results_${TEST_ENV}.xml"
+          ALLURE_RESULTS="test-output/allure-results/${TEST_ENV}"
+          pytest tests/ --junitxml="${TEST_RESULTS}" --alluredir="${ALLURE_RESULTS}" || true
+
+      # Generate Allure report
+      - name: Generate Allure Report for ${{ matrix.env_name }}
+        run: |
+          allure generate test-output/allure-results/${{ matrix.env_name }} -o test-output/allure-report-${{ matrix.env_name }} --clean || true
+
+      # Upload Allure report as artifact
+      - name: Upload Allure Report for ${{ matrix.env_name }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report-${{ matrix.env_name }}
+          path: test-output/allure-report-${{ matrix.env_name }}
+
+  # Consolidate and send reports to Slack after all tests complete
+  send-reports:
+    runs-on: ubuntu-latest
+    needs: selenium-test  # Wait for all selenium-test jobs to complete
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Download all reports
+      - name: Download Allure Reports
+        uses: actions/download-artifact@v3
+        with:
+          name: allure-report-dev
+          path: test-output/allure-report-dev
+      - uses: actions/download-artifact@v3
+        with:
+          name: allure-report-staging
+          path: test-output/allure-report-staging
+      - uses: actions/download-artifact@v3
+        with:
+          name: allure-report-production
+          path: test-output/allure-report-production
+
+      # Verify all reports
+      - name: Verify Allure Reports
         run: |
           for ENV in dev staging production; do
-            echo "Running tests in $ENV environment"
-            
-            # Set the base URL dynamically
-            case "$ENV" in
-              "dev") BASE_URL="https://user.dev-ooro.co.uk/" ;;
-              "staging") BASE_URL="https://user.staging-ooro.co.uk/" ;;
-              "production") BASE_URL="https://user.ooro.co.uk/" ;;
-            esac
-            echo "Using BASE_URL: $BASE_URL"
-            
-            # Run tests and handle failures gracefully
-            TEST_RESULTS="test-output/results_${ENV}.xml"
-            ALLURE_RESULTS="test-output/allure-results/${ENV}"
-            pytest tests/ --junitxml="${TEST_RESULTS}" --alluredir="${ALLURE_RESULTS}" || true
-            
-            # Generate Allure report
-            ALLURE_REPORT="test-output/allure-report-${ENV}"
-            allure generate "${ALLURE_RESULTS}" -o "${ALLURE_REPORT}" --clean || true
-            
-            # Validate report existence
-            if [ ! -f "${ALLURE_REPORT}/index.html" ]; then
+            if [ ! -f test-output/allure-report-${ENV}/index.html ]; then
               echo "Allure report for $ENV not found!" && exit 1
             fi
           done
-
-      # Upload Allure reports as artifacts
-      - name: Upload Allure Reports
-        uses: actions/upload-artifact@v3
-        with:
-          name: allure-reports
-          path: test-output/allure-report-*/
 
       # Send Allure reports to Slack
       - name: Send Allure Reports to Slack
