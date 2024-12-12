@@ -46,11 +46,11 @@ jobs:
         run: | 
           echo "Running tests in $TEST_ENV" 
           # Change the base URL dynamically 
-          if [ "$TEST_ENV" == "DEV" ]; then 
+          if [ "$TEST_ENV" == "dev" ]; then 
             export BASE_URL="https://user.dev-ooro.co.uk/" 
-          elif [ "$TEST_ENV" == "STAGING" ]; then 
+          elif [ "$TEST_ENV" == "staging" ]; then 
               export BASE_URL="https://user.staging-ooro.co.uk" 
-          elif [ "$TEST_ENV" == "PRODUCTION" ]; then 
+          elif [ "$TEST_ENV" == "production" ]; then 
             export BASE_URL="https://user.ooro.co.uk" 
           fi 
           
