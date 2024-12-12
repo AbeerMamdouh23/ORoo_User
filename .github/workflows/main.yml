@@ -56,17 +56,23 @@ jobs:
           ALLURE_RESULTS="test-output/allure-results/${TEST_ENV}"
           pytest tests/ --junitxml="${TEST_RESULTS}" --alluredir="${ALLURE_RESULTS}" || true
 
-      # Generate Allure report
+      # Generate Allure Report for the respective environment
       - name: Generate Allure Report for ${{ matrix.env_name }}
         run: |
           allure generate test-output/allure-results/${{ matrix.env_name }} -o test-output/allure-report-${{ matrix.env_name }} --clean || true
 
-      # Upload Allure report as artifact
+      # Rename Allure report index.html
+      - name: Rename Allure Report for ${{ matrix.env_name }}
+        run: |
+          mv test-output/allure-report-${{ matrix.env_name }}/index.html test-output/allure-report-${{ matrix.env_name }}/allure-report-${{ matrix.env_name }}.html
+
+      # Upload Allure report artifacts for the respective environment
       - name: Upload Allure Report for ${{ matrix.env_name }}
         uses: actions/upload-artifact@v3
         with:
           name: allure-report-${{ matrix.env_name }}
           path: test-output/allure-report-${{ matrix.env_name }}
+
 
   # Consolidate and send reports to Slack after all tests complete
   send-reports:
