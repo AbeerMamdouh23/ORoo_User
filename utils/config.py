@@ -11,6 +11,5 @@ def take_screenshot(driver, name):
 
 
 class Config:
-    URL = os.getenv("BASE_URL","https://user.dev-ooro.co.uk/")
     USERNAME = "testuser@email.com"
     PASSWORD = "Testuser@1"
