@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy: 
       matrix: 
-        env_name: [DEV, STAGING, PRODUCTION] # Dynamically loop through environments
+        env_name: [dev, staging, production] # Dynamically loop through environments
     steps:
       # Checkout the repository
       - name: Checkout code
