@@ -52,11 +52,17 @@ jobs:
             "production") BASE_URL="https://user.ooro.co.uk/" ;;
           esac
           echo "Using BASE_URL: $BASE_URL"
+          
+          # Set the environment variables for test results and allure directories
           TEST_RESULTS="test-output/results_${TEST_ENV}.xml"
           ALLURE_RESULTS="test-output/allure-results/${TEST_ENV}"
-        # Export BASE_URL so it can be accessed during tests
+      
+          # Export BASE_URL so it can be accessed during tests
           export BASE_URL
+      
+          # Run pytest with the necessary directories
           pytest tests/ --junitxml="${TEST_RESULTS}" --alluredir="${ALLURE_RESULTS}" || true
+
 
 
       # Generate Allure Report for the respective environment
