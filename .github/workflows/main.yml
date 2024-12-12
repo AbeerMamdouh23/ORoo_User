@@ -77,9 +77,6 @@ jobs:
   # Consolidate and send reports to Slack after all tests complete
   send-reports:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        env_name: [ dev, staging, production ] # Run tests for each environment in parallel
     needs: selenium-test  # Wait for all selenium-test jobs to complete
     steps:
       # Checkout the repository
@@ -100,15 +97,6 @@ jobs:
         with:
           name: allure-report-production
           path: test-output/allure-report-production
-
-      # Verify Allure Report for the respective environment
-      - name: Verify Allure Report for ${{ matrix.env_name }}
-        run: |
-          if [ ! -f test-output/allure-report-${{ matrix.env_name }}/allure-report-${{ matrix.env_name }}.html ]; then
-            echo "Allure report for ${{ matrix.env_name }} not found!" && exit 1
-          else
-            echo "Allure report for ${{ matrix.env_name }} exists."
-          fi
 
       # Send Allure reports to Slack
       - name: Send Allure Reports to Slack
