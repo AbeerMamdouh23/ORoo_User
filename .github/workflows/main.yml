@@ -98,14 +98,14 @@ jobs:
           name: allure-report-production
           path: test-output/allure-report-production
 
-      # Verify all reports
-      - name: Verify Allure Reports
+      # Verify Allure Report for the respective environment
+      - name: Verify Allure Report for ${{ matrix.env_name }}
         run: |
-          for ENV in dev staging production; do
-            if [ ! -f test-output/allure-report-${ENV}/index.html ]; then
-              echo "Allure report for $ENV not found!" && exit 1
-            fi
-          done
+          if [ ! -f test-output/allure-report-${{ matrix.env_name }}/allure-report-${{ matrix.env_name }}.html ]; then
+            echo "Allure report for ${{ matrix.env_name }} not found!" && exit 1
+          else
+            echo "Allure report for ${{ matrix.env_name }} exists."
+          fi
 
       # Send Allure reports to Slack
       - name: Send Allure Reports to Slack
@@ -115,11 +115,12 @@ jobs:
           channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
           file_type: 'html'
           file_path: |
-            test-output/allure-report-dev/index.html
-            test-output/allure-report-staging/index.html
-            test-output/allure-report-production/index.html
+            test-output/allure-report-dev/allure-report-dev.html
+            test-output/allure-report-staging/allure-report-staging.html
+            test-output/allure-report-production/allure-report-production.html
           file_name: |
             allure-report-dev.html
             allure-report-staging.html
             allure-report-production.html
           initial_comment: 'Automation Testing Status: Reports for all environments'
+
