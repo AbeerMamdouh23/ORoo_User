@@ -57,7 +57,7 @@ jobs:
           echo "Using BASE_URL: $BASE_URL" 
           # Pass the base URL to the test script 
           pytest tests/ --junitxml="results_${TEST_ENV}.xml" || true    
-          continue-on-error: true
+        continue-on-error: true
       # Generate Allure Report
       - name: Generate Allure Report
         run: |
