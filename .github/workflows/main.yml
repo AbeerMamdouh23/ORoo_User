@@ -91,7 +91,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: status-${{ matrix.env_name }}
-          path: test-output/status_${{ matrix.env_name }}.txt
+          path: test-output/status-${{ matrix.env_name }}.txt
       - name: Upload Allure report artifacts
         uses: actions/upload-artifact@v3
         with:
