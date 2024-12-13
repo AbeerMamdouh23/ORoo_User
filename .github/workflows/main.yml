@@ -112,15 +112,15 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: status-dev
-          path: test-output/status-dev.txt
+          path: test-output/status-dev
       - uses: actions/download-artifact@v3
         with:
           name: status-staging
-          path: test-output/status-staging.txt
+          path: test-output/status-staging
       - uses: actions/download-artifact@v3
         with:
           name: status-production
-          path: test-output/status-production.txt
+          path: test-output/status-production
 
       - name: Download Allure Reports
         uses: actions/download-artifact@v3
@@ -140,9 +140,9 @@ jobs:
       - name: Create summary of test statuses
         run: |
           echo "Generating test status summary..."
-          echo "DEV: $(cat test-output/status-dev.txt)" > test-output/summary.txt
-          echo "STAGING: $(cat test-output/status-staging.txt)" >> test-output/summary.txt
-          echo "PRODUCTION: $(cat test-output/status-production.txt)" >> test-output/summary.txt
+          echo "DEV: $(cat test-output/status-dev/status-dev.txt)" > test-output/summary.txt
+          echo "STAGING: $(cat test-output/status-staging/status-staging.txt)" >> test-output/summary.txt
+          echo "PRODUCTION: $(cat test-output/status-production/status-production.txt)" >> test-output/summary.txt
           cat test-output/summary.txt
 
       # Send Allure reports and statuses to Slack
