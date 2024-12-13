@@ -153,30 +153,31 @@ jobs:
             fi
             echo "${STATUS}: ${COLOR} Tests passed: ${PASSED}/${TOTAL}"
           }
-
+      
           # Parse and generate statuses
           DEV_STATUS=$(cat test-output/status-dev/status-dev.txt)
           STAGING_STATUS=$(cat test-output/status-staging/status-staging.txt)
           PRODUCTION_STATUS=$(cat test-output/status-production/status-production.txt)
-
+      
           DEV_TOTAL=$(echo $DEV_STATUS | grep -oP '(?<=/)\d+')
           DEV_PASSED=$(echo $DEV_STATUS | grep -oP '\d+(?=/)')
-
+      
           STAGING_TOTAL=$(echo $STAGING_STATUS | grep -oP '(?<=/)\d+')
           STAGING_PASSED=$(echo $STAGING_STATUS | grep -oP '\d+(?=/)')
-
+      
           PRODUCTION_TOTAL=$(echo $PRODUCTION_STATUS | grep -oP '(?<=/)\d+')
           PRODUCTION_PASSED=$(echo $PRODUCTION_STATUS | grep -oP '\d+(?=/)')
-
+      
           summarize_status "DEV" $DEV_TOTAL $DEV_PASSED > test-output/summary.txt
           summarize_status "STAGING" $STAGING_TOTAL $STAGING_PASSED >> test-output/summary.txt
           summarize_status "PRODUCTION" $PRODUCTION_TOTAL $PRODUCTION_PASSED >> test-output/summary.txt
-
+      
           echo "Generated summary:"
           cat test-output/summary.txt
-
-          # Export the summary for use in the next step
-          echo "STATUS_SUMMARY=$(cat test-output/summary.txt)" >> $GITHUB_ENV
+      
+          # Escape special characters for GITHUB_ENV
+          STATUS_SUMMARY=$(cat test-output/summary.txt | sed 's/:/%3A/g; s/ /%20/g')
+          echo "STATUS_SUMMARY=$STATUS_SUMMARY" >> $GITHUB_ENV
 
       # Send Allure reports and statuses to Slack
       - name: Send Allure Reports to Slack
@@ -196,4 +197,5 @@ jobs:
           initial_comment: |
             Automation Testing Status:
             ${{ env.STATUS_SUMMARY }}
+
 
