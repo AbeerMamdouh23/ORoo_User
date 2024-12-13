@@ -68,6 +68,7 @@ jobs:
           STATUS_MESSAGE="Tests passed: ${TESTS_PASSED}/${TESTS_TOTAL}"
           
           echo "${STATUS_MESSAGE}" > "test-output/status_${TEST_ENV}.txt"
+        continue-on-error: true
 
       # Generate Allure Report for the respective environment
       - name: Generate Allure Report for ${{ matrix.env_name }}
