@@ -66,7 +66,7 @@ jobs:
           TESTS_TOTAL=$(grep -oP '(?<=tests=")\d+' "${TEST_RESULTS}" | head -1)
           TESTS_FAILED=$(grep -oP '(?<=failures=")\d+' "${TEST_RESULTS}" | head -1)
           TESTS_ERRORS=$(grep -oP '(?<=errors=")\d+' "${TEST_RESULTS}" | head -1)
-          TOTAL_FAILED= $((TESTS_FAILED + TESTS_ERRORS))
+          TOTAL_FAILED=$((TESTS_FAILED + TESTS_ERRORS))
           TESTS_PASSED=$((TESTS_TOTAL - TOTAL_FAILED))
           
           STATUS_MESSAGE="Tests passed: ${TESTS_PASSED}/${TESTS_TOTAL}"
