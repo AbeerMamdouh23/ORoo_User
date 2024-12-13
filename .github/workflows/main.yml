@@ -168,16 +168,18 @@ jobs:
           PRODUCTION_TOTAL=$(echo $PRODUCTION_STATUS | grep -oP '(?<=/)\d+')
           PRODUCTION_PASSED=$(echo $PRODUCTION_STATUS | grep -oP '\d+(?=/)')
       
-          summarize_status "DEV" $DEV_TOTAL $DEV_PASSED > test-output/summary.txt
-          summarize_status "STAGING" $STAGING_TOTAL $STAGING_PASSED >> test-output/summary.txt
-          summarize_status "PRODUCTION" $PRODUCTION_TOTAL $PRODUCTION_PASSED >> test-output/summary.txt
+          echo "$(summarize_status "DEV" $DEV_TOTAL $DEV_PASSED)" > test-output/summary.txt
+          echo "$(summarize_status "STAGING" $STAGING_TOTAL $STAGING_PASSED)" >> test-output/summary.txt
+          echo "$(summarize_status "PRODUCTION" $PRODUCTION_TOTAL $PRODUCTION_PASSED)" >> test-output/summary.txt
       
           echo "Generated summary:"
           cat test-output/summary.txt
       
-          # Escape special characters for GITHUB_ENV
-          STATUS_SUMMARY=$(cat test-output/summary.txt | sed 's/:/%3A/g; s/ /%20/g')
-          echo "STATUS_SUMMARY=$STATUS_SUMMARY" >> $GITHUB_ENV
+          # Safely export multi-line content for use in other steps
+          SUMMARY=$(<test-output/summary.txt)
+          echo "STATUS_SUMMARY<<EOF" >> $GITHUB_ENV
+          echo "$SUMMARY" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       # Send Allure reports and statuses to Slack
       - name: Send Allure Reports to Slack
@@ -197,5 +199,6 @@ jobs:
           initial_comment: |
             Automation Testing Status:
             ${{ env.STATUS_SUMMARY }}
+      
 
 
