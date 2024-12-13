@@ -45,5 +45,5 @@ class TestLogin:
         login_page.click_login()
 
         # Assert and handle screenshot on failure
-        assert "Invalid credential" in  login_page.get_error_message()
+        assert "Invalid credentials ahmed" in  login_page.get_error_message()
         take_screenshot(self.driver, "invalid_login_screenshot")
