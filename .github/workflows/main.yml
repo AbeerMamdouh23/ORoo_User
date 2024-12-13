@@ -53,36 +53,37 @@ jobs:
           esac
           echo "Using BASE_URL: $BASE_URL"
           
-          # Set the environment variables for test results and allure directories
+          # Run pytest with output directed to JUnit XML and count tests
           TEST_RESULTS="test-output/results_${TEST_ENV}.xml"
-      
-          # Export BASE_URL so it can be accessed during tests
           export BASE_URL
-      
-          # Run pytest with the necessary directories
-          pytest tests/ --junitxml="${TEST_RESULTS}"  || true
-
-
+          pytest tests/ --junitxml="${TEST_RESULTS}" || true
+          
+          # Parse pytest results and save status
+          TESTS_PASSED=$(grep -oP '(?<=tests=")\d+' "${TEST_RESULTS}" | head -1)
+          TESTS_FAILED=$(grep -oP '(?<=failures=")\d+' "${TEST_RESULTS}" | head -1)
+          TESTS_TOTAL=$((TESTS_PASSED + TESTS_FAILED))
+          STATUS_MESSAGE="Tests passed: ${TESTS_PASSED}/${TESTS_TOTAL}"
+          
+          echo "${STATUS_MESSAGE}" > "test-output/status_${TEST_ENV}.txt"
 
       # Generate Allure Report for the respective environment
       - name: Generate Allure Report for ${{ matrix.env_name }}
         run: |
           allure generate test-output/allure-results -o test-output/allure-report-${{ matrix.env_name }} --single-file --clean || true
 
-      # Rename Allure report index.html
-      - name: Rename Allure Report for ${{ matrix.env_name }}
-        run: |
-          mv test-output/allure-report-${{ matrix.env_name }}/index.html test-output/allure-report-${{ matrix.env_name }}/allure-report-${{ matrix.env_name }}.html
-
-      # Upload Allure report artifacts for the respective environment
-      - name: Upload Allure Report for ${{ matrix.env_name }}
+      # Upload status message and Allure report artifacts
+      - name: Upload status and Allure report artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: status-${{ matrix.env_name }}
+          path: test-output/status_${{ matrix.env_name }}.txt
+      - name: Upload Allure report artifacts
         uses: actions/upload-artifact@v3
         with:
           name: allure-report-${{ matrix.env_name }}
           path: test-output/allure-report-${{ matrix.env_name }}
 
 
-  # Consolidate and send reports to Slack after all tests complete
   send-reports:
     runs-on: ubuntu-latest
     needs: selenium-test  # Wait for all selenium-test jobs to complete
@@ -91,7 +92,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Download all reports
+      # Download all statuses and reports
+      - name: Download status files
+        uses: actions/download-artifact@v3
+        with:
+          name: status-dev
+          path: test-output/status-dev.txt
+      - uses: actions/download-artifact@v3
+        with:
+          name: status-staging
+          path: test-output/status-staging.txt
+      - uses: actions/download-artifact@v3
+        with:
+          name: status-production
+          path: test-output/status-production.txt
+
       - name: Download Allure Reports
         uses: actions/download-artifact@v3
         with:
@@ -106,7 +121,16 @@ jobs:
           name: allure-report-production
           path: test-output/allure-report-production
 
-      # Send Allure reports to Slack
+      # Consolidate status messages
+      - name: Create summary of test statuses
+        run: |
+          echo "Generating test status summary..."
+          echo "DEV: $(cat test-output/status-dev.txt)" > test-output/summary.txt
+          echo "STAGING: $(cat test-output/status-staging.txt)" >> test-output/summary.txt
+          echo "PRODUCTION: $(cat test-output/status-production.txt)" >> test-output/summary.txt
+          cat test-output/summary.txt
+
+      # Send Allure reports and statuses to Slack
       - name: Send Allure Reports to Slack
         uses: MeilCli/slack-upload-file@v4
         with:
@@ -121,5 +145,6 @@ jobs:
             allure-report-dev.html
             allure-report-staging.html
             allure-report-production.html
-          initial_comment: 'Automation Testing Status: Reports for all environments'
-
+          initial_comment: |
+            Automation Testing Status:
+            $(cat test-output/summary.txt)
