@@ -13,6 +13,7 @@ jobs:
   selenium-test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         env_name: [dev, staging, production] # Run tests for each environment in parallel
     steps:
@@ -77,10 +78,13 @@ jobs:
       - name: Generate Allure Report for ${{ matrix.env_name }}
         run: |
           allure generate test-output/allure-results -o test-output/allure-report-${{ matrix.env_name }} --single-file --clean || true
-          # Rename Allure report index.html
-          - name: Rename Allure Report for ${{ matrix.env_name }}
-            run: |
-              mv test-output/allure-report-${{ matrix.env_name }}/index.html test-output/allure-report-${{ matrix.env_name }}/allure-report-${{ matrix.env_name }}.html
+        continue-on-error: true
+
+      # Rename Allure report index.html
+      - name: Rename Allure Report for ${{ matrix.env_name }}
+        run: |
+          mv test-output/allure-report-${{ matrix.env_name }}/index.html test-output/allure-report-${{ matrix.env_name }}/allure-report-${{ matrix.env_name }}.html
+        continue-on-error: true
 
       # Upload status message and Allure report artifacts
       - name: Upload status and Allure report artifacts
