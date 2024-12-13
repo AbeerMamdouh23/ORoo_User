@@ -145,36 +145,36 @@ jobs:
             TOTAL=$2
             PASSED=$3
             if [ "$PASSED" -eq "$TOTAL" ]; then
-              COLOR=":green_circle:"  # All tests passed
+              COLOR="🟢"  # All tests passed
             elif [ "$PASSED" -eq 0 ]; then
-              COLOR=":red_circle:"    # All tests failed
+              COLOR="🔴"    # All tests failed
             else
-              COLOR=":orange_circle:" # Some tests failed
+              COLOR="🟠" # Some tests failed
             fi
             echo "${STATUS}: ${COLOR} Tests passed: ${PASSED}/${TOTAL}"
           }
-      
+
           # Parse and generate statuses
           DEV_STATUS=$(cat test-output/status-dev/status-dev.txt)
           STAGING_STATUS=$(cat test-output/status-staging/status-staging.txt)
           PRODUCTION_STATUS=$(cat test-output/status-production/status-production.txt)
-      
+
           DEV_TOTAL=$(echo $DEV_STATUS | grep -oP '(?<=/)\d+')
           DEV_PASSED=$(echo $DEV_STATUS | grep -oP '\d+(?=/)')
-      
+
           STAGING_TOTAL=$(echo $STAGING_STATUS | grep -oP '(?<=/)\d+')
           STAGING_PASSED=$(echo $STAGING_STATUS | grep -oP '\d+(?=/)')
-      
+
           PRODUCTION_TOTAL=$(echo $PRODUCTION_STATUS | grep -oP '(?<=/)\d+')
           PRODUCTION_PASSED=$(echo $PRODUCTION_STATUS | grep -oP '\d+(?=/)')
-      
+
           echo "$(summarize_status "DEV" $DEV_TOTAL $DEV_PASSED)" > test-output/summary.txt
           echo "$(summarize_status "STAGING" $STAGING_TOTAL $STAGING_PASSED)" >> test-output/summary.txt
           echo "$(summarize_status "PRODUCTION" $PRODUCTION_TOTAL $PRODUCTION_PASSED)" >> test-output/summary.txt
-      
+
           echo "Generated summary:"
           cat test-output/summary.txt
-      
+
           # Safely export multi-line content for use in other steps
           SUMMARY=$(<test-output/summary.txt)
           echo "STATUS_SUMMARY<<EOF" >> $GITHUB_ENV
@@ -199,6 +199,7 @@ jobs:
           initial_comment: |
             Automation Testing Status:
             ${{ env.STATUS_SUMMARY }}
+
       
 
 
