@@ -140,10 +140,43 @@ jobs:
       - name: Create summary of test statuses
         run: |
           echo "Generating test status summary..."
-          echo "DEV: $(cat test-output/status-dev/status-dev.txt)" > test-output/summary.txt
-          echo "STAGING: $(cat test-output/status-staging/status-staging.txt)" >> test-output/summary.txt
-          echo "PRODUCTION: $(cat test-output/status-production/status-production.txt)" >> test-output/summary.txt
+          summarize_status() {
+            STATUS=$1
+            TOTAL=$2
+            PASSED=$3
+            if [ "$PASSED" -eq "$TOTAL" ]; then
+              COLOR=":green_circle:"  # All tests passed
+            elif [ "$PASSED" -eq 0 ]; then
+              COLOR=":red_circle:"    # All tests failed
+            else
+              COLOR=":orange_circle:" # Some tests failed
+            fi
+            echo "${STATUS}: ${COLOR} Tests passed: ${PASSED}/${TOTAL}"
+          }
+
+          # Parse and generate statuses
+          DEV_STATUS=$(cat test-output/status-dev/status-dev.txt)
+          STAGING_STATUS=$(cat test-output/status-staging/status-staging.txt)
+          PRODUCTION_STATUS=$(cat test-output/status-production/status-production.txt)
+
+          DEV_TOTAL=$(echo $DEV_STATUS | grep -oP '(?<=/)\d+')
+          DEV_PASSED=$(echo $DEV_STATUS | grep -oP '\d+(?=/)')
+
+          STAGING_TOTAL=$(echo $STAGING_STATUS | grep -oP '(?<=/)\d+')
+          STAGING_PASSED=$(echo $STAGING_STATUS | grep -oP '\d+(?=/)')
+
+          PRODUCTION_TOTAL=$(echo $PRODUCTION_STATUS | grep -oP '(?<=/)\d+')
+          PRODUCTION_PASSED=$(echo $PRODUCTION_STATUS | grep -oP '\d+(?=/)')
+
+          summarize_status "DEV" $DEV_TOTAL $DEV_PASSED > test-output/summary.txt
+          summarize_status "STAGING" $STAGING_TOTAL $STAGING_PASSED >> test-output/summary.txt
+          summarize_status "PRODUCTION" $PRODUCTION_TOTAL $PRODUCTION_PASSED >> test-output/summary.txt
+
+          echo "Generated summary:"
           cat test-output/summary.txt
+
+          # Export the summary for use in the next step
+          echo "STATUS_SUMMARY=$(cat test-output/summary.txt)" >> $GITHUB_ENV
 
       # Send Allure reports and statuses to Slack
       - name: Send Allure Reports to Slack
@@ -162,4 +195,5 @@ jobs:
             allure-report-production.html
           initial_comment: |
             Automation Testing Status:
-            $(cat test-output/summary.txt)
+            ${{ env.STATUS_SUMMARY }}
+
