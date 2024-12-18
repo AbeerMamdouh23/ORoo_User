@@ -46,5 +46,5 @@ class TestDevice:
         device_page = DevicePage(self.driver)
 
         # click on manage your devices button
-        assert device_page.get_view_devices().is_not_displayed()
+        assert device_page.get_view().is_displayed()
         take_screenshot(self.driver, "No_activated_devices_screenshot")

@@ -6,9 +6,13 @@ class DevicePage(BasePage):
         self.driver = driver
 
     CONNECTED_DEVICES = (By.ID, "devicesContainerText")
+    button = (By.ID, "activationItemButton")
 
 
 
 
     def get_view_devices(self):
         return self.find_element(*self.CONNECTED_DEVICES)
+
+    def get_view(self):
+        return self.find_element(*self.button)
