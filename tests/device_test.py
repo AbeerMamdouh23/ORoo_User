@@ -29,17 +29,9 @@ class TestDevice:
         device_page = DevicePage(self.driver)
 
         # click on manage your devices button
-        device_page.click_manage_your_devices()
-        try:
-            device_page.click_on_view_button()
-            assert device_page.get_device_name().is_displayed()
-            assert device_page.get_device_type().is_displayed()
-            assert device_page.get_device_activation().is_displayed()
-            take_screenshot(self.driver, "Activation_devices_screenshot")
+        assert device_page.get_view_devices().is_displayed()
+        take_screenshot(self.driver, "Activated_devices_screenshot")
 
-        except NoSuchElementException:
-            assert device_page.get_no_devices().is_displayed()
-            take_screenshot(self.driver, "No_activated_devices_screenshot")
 
 
     # Test case for there is no any device
@@ -54,14 +46,5 @@ class TestDevice:
         device_page = DevicePage(self.driver)
 
         # click on manage your devices button
-        device_page.click_manage_your_devices()
-        try:
-            device_page.click_on_view_button()
-            assert device_page.get_device_name().is_displayed()
-            assert device_page.get_device_type().is_displayed()
-            assert device_page.get_device_activation().is_displayed()
-            take_screenshot(self.driver, "Activation_devices_screenshot")
-
-        except TimeoutException:
-            assert device_page.get_no_devices().is_displayed()
-            take_screenshot(self.driver, "No_activated_devices_screenshot")
+        assert device_page.get_view_devices().is_not_displayed()
+        take_screenshot(self.driver, "No_activated_devices_screenshot")
