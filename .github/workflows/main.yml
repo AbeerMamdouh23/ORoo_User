@@ -197,7 +197,7 @@ jobs:
             allure-report-staging.html
             allure-report-production.html
           initial_comment: |
-            Automation Testing Status <b>User Portal</b>:
+            Automation Testing Status User Portal:
             ${{ env.STATUS_SUMMARY }}
 
       
