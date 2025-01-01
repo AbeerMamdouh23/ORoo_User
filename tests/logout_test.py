@@ -19,7 +19,7 @@ class TestLogout:
 
         # Initialize the LoginPage object with the driver instance
         login_page = LoginPage(self.driver)
-        login_page.login_steps(Config.USERNAME,Config.PASSWORD)
+        login_page.login_steps(Config.USERNAME, Config.PASSWORD)
 
         # Initialize the LogOutPage object with the driver instance
         logout_page = LogOutPage(self.driver)
