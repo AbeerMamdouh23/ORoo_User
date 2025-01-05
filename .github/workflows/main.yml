@@ -1,9 +1,6 @@
 name: Selenium Daily Run
 
 on:
-  push:
-    branches:
-      - master
   workflow_dispatch:  # Enables manual triggering of the workflow
   schedule:
     # Runs daily at 06:00 UTC
