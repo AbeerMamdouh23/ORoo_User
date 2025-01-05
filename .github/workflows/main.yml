@@ -197,11 +197,7 @@ jobs:
             allure-report-staging.html
             allure-report-production.html
           initial_comment: |
-<<<<<<< HEAD
             Automation Testing Status For User Portal:
-=======
-            Automation Testing Status User Portal:
->>>>>>> e1ea7444a12eec0bd3155e31c200d62cdb54a366
             ${{ env.STATUS_SUMMARY }}
 
       
