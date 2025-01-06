@@ -37,12 +37,4 @@ class TestProfile:
         assert profile_page.check_post_code().is_displayed()
         assert profile_page.check_logout_button().is_displayed()
 
-
-
-        # Assert and handle screenshot on failure of last name
-        #assert (profile_page.check_last_name_value()== "test")
-
-        # Assert and handle screenshot on failure of email
-        #assert (profile_page.check_email_value()== "testuser@email.com")
-
         take_screenshot(self.driver, "verify_Profile_Page_screenshot")
