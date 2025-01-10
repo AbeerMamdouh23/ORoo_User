@@ -16,19 +16,13 @@ class TestLogin:
 
     def test_valid_login(self, setup):
         #Test case for valid login with correct credentials using explicit wait
-
         self.driver = setup  # Assign the driver from the fixture
 
-        # Initialize the LoginPage object with the driver instance
-        login_page = LoginPage(self.driver)
-
         # Perform login actions with valid credentials
-        login_page.enter_email(Config.USERNAME)
-        login_page.enter_password(Config.PASSWORD)
-        login_page.click_login()
-
-        # Assert and handle screenshot on failure
-        assert login_page.get_home_text().is_displayed()
+        (LoginPage(self.driver).enter_email(Config.USERNAME)
+         .enter_password(Config.PASSWORD)
+         .click_login()
+         .assert_success_login())
         take_screenshot(self.driver, "valid_login_screenshot")
 
 
@@ -36,14 +30,12 @@ class TestLogin:
     def test_invalid_login(self, setup):
         self.driver = setup  # Assign the driver from the fixture
 
-        # Initialize the LoginPage object with the driver instance
-        login_page = LoginPage(self.driver)
 
         # Perform login actions with invalid credentials
-        login_page.enter_email("invalid_user@example.com")
-        login_page.enter_password("wrong_password")
-        login_page.click_login()
+        (LoginPage(self.driver).enter_email("invalid_user@example.com")
+        .enter_password("wrong_password")
+        .click_login()
+        .assert_fail_login())
 
         # Assert and handle screenshot on failure
-        assert "Invalid credentials" in  login_page.get_error_message()
         take_screenshot(self.driver, "invalid_login_screenshot")

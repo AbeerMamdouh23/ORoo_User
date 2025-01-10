@@ -22,14 +22,10 @@ class TestDevice:
 
 
         # Initialize the LoginPage object with the driver instance
-        login_page = LoginPage(self.driver)
-        login_page.login_steps(Config.USERNAME, Config.PASSWORD)
-
-        # Initialize the DevicePage object with the driver instance
-        device_page = DevicesPage(self.driver)
-
-        # click on manage your devices button
-        assert device_page.get_view_devices() == True
+        (LoginPage(self.driver)
+         .login_steps(Config.USERNAME, Config.PASSWORD)
+         .assert_success_login()
+         .assert_success_activation())
         take_screenshot(self.driver, "Activated_devices_screenshot")
 
 
@@ -39,12 +35,9 @@ class TestDevice:
         self.driver = setup  # Assign the driver from the fixture
 
         # Initialize the LoginPage object with the driver instance
-        login_page = LoginPage(self.driver)
-        login_page.login_steps("testuser2@email.com", "Testuser@2")
+        (LoginPage(self.driver)
+         .login_steps("testuser2@email.com", "Testuser@2")
+         .assert_success_login()
+         .assert_fail_activation())
 
-        # Initialize the DevicePage object with the driver instance
-        device_page = DevicesPage(self.driver)
-
-        # click on manage your devices button
-        assert device_page.get_view_devices() == False
         take_screenshot(self.driver, "No_activated_devices_screenshot")

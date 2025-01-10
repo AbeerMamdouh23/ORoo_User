@@ -19,7 +19,7 @@ import os
 import logging
 from datetime import datetime
 
-from utils.config import Config
+from utils.config import Config, take_screenshot
 
 # Create logs directory (if it doesn't exist)
 script_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -113,7 +113,15 @@ def clean_report():
         shutil.rmtree(allure_results_dir)
     os.makedirs(allure_results_dir)
 
-
+def pytest_runtest_logreport(report):
+    if report.when == "call":  # This ensures it's after the test execution phase
+        if report.passed:
+            #take_screenshot(driver, report.nodeid.split('::')[-1])
+            print(f"Test {report.nodeid.split('::')[-1]} PASSED")
+        elif report.failed:
+            print(f"Test {report.nodeid.split('::')[-1]} FAILED")
+        elif report.skipped:
+            print(f"Test {report.nodeid.split('::')[-1]} SKIPPED")
 
 # def pytest_sessionfinish(session, exitstatus):
 #     """Hook to generate the Allure report after the test session finishes."""
@@ -151,7 +159,7 @@ def setup(URL):
     options = webdriver.ChromeOptions()
     # Add options if needed, for example:
     # Add arguments to run Chrome headlessly and solve DevToolsActivePort issue
-    options.add_argument("--headless")
+    #options.add_argument("--headless")
     options.add_argument("--no-sandbox")  # Needed for some CI environments like GitHub Actions
     options.add_argument("--disable-dev-shm-usage")  # Prevent crash due to limited memory in CI
     options.add_argument("--disable-gpu")  # Disable GPU hardware acceleration

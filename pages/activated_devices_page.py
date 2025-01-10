@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
@@ -16,3 +17,14 @@ class DevicesPage(BasePage):
         except Exception:
             return False
 
+
+    @allure.step("validate success activation ")
+    def assert_success_activation(self):
+        assert  self.get_view_devices()==True
+        return DevicesPage(self.driver)
+
+
+    @allure.step("validate fail activation ")
+    def assert_fail_activation(self):
+        assert  self.get_view_devices()==False
+        return DevicesPage(self.driver)
