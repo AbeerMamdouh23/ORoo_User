@@ -18,13 +18,13 @@ class DevicesPage(BasePage):
             return False
 
 
-    @allure.step("validate success activation ")
-    def assert_success_activation(self):
+    @allure.step("validate there are activated devices")
+    def assert_existing_devices(self):
         assert  self.get_view_devices()==True
         return DevicesPage(self.driver)
 
 
-    @allure.step("validate fail activation ")
-    def assert_fail_activation(self):
+    @allure.step("validate no activated devices")
+    def assert_no_activated_devices(self):
         assert  self.get_view_devices()==False
         return DevicesPage(self.driver)

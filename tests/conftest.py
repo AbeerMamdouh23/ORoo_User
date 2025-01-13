@@ -159,7 +159,7 @@ def setup(URL):
     options = webdriver.ChromeOptions()
     # Add options if needed, for example:
     # Add arguments to run Chrome headlessly and solve DevToolsActivePort issue
-    #options.add_argument("--headless")
+    options.add_argument("--headless")
     options.add_argument("--no-sandbox")  # Needed for some CI environments like GitHub Actions
     options.add_argument("--disable-dev-shm-usage")  # Prevent crash due to limited memory in CI
     options.add_argument("--disable-gpu")  # Disable GPU hardware acceleration

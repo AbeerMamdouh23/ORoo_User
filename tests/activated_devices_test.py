@@ -21,11 +21,11 @@ class TestDevice:
         self.driver = setup  # Assign the driver from the fixture
 
 
-        # Initialize the LoginPage object with the driver instance
+        # Initialize the LoginPage object with the driver instance & assertion
         (LoginPage(self.driver)
          .login_steps(Config.USERNAME, Config.PASSWORD)
          .assert_success_login()
-         .assert_success_activation())
+         .assert_existing_devices())
         take_screenshot(self.driver, "Activated_devices_screenshot")
 
 
@@ -38,6 +38,5 @@ class TestDevice:
         (LoginPage(self.driver)
          .login_steps("testuser2@email.com", "Testuser@2")
          .assert_success_login()
-         .assert_fail_activation())
-
+         .assert_no_activated_devices())
         take_screenshot(self.driver, "No_activated_devices_screenshot")
