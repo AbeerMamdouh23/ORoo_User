@@ -145,6 +145,8 @@ jobs:
               COLOR="🟢"  # All tests passed
             elif [ "$PASSED" -eq 0 ]; then
               COLOR="🔴"    # All tests failed
+              # Send notification if all tests failed
+              echo "::set-output name=all_tests_failed::true" 
             else
               COLOR="🟠" # Some tests failed
             fi
