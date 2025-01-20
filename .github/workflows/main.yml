@@ -145,15 +145,13 @@ jobs:
               COLOR="🟢"  # All tests passed
             elif [ "$PASSED" -eq 0 ]; then
               COLOR="🔴"    # All tests failed
+              echo "::set-output name=all_tests_failed::true" 
             else
               COLOR="🟠" # Some tests failed
             fi
             echo "${STATUS}: ${COLOR} Tests passed: ${PASSED}/${TOTAL}"
           }
-           # Check if all tests failed
-          if [ "$DEV_PASSED" -eq 0 ] || [ "$STAGING_PASSED" -eq 0 ] || [ "$PRODUCTION_PASSED" -eq 0 ]; then
-            echo "::set-output name=all_tests_failed::true" 
-          fi
+        
 
           # Parse and generate statuses
           DEV_STATUS=$(cat test-output/status-dev/status-dev.txt)
