@@ -13,8 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         env_name: [dev, staging, production] # Run tests for each environment in parallel
-    outputs:
-      total_failed: ${{ steps.aggregate-failures.outputs.total_failed }} 
+    
     steps:
       # Checkout the repository
       - name: Checkout code
@@ -105,6 +104,8 @@ jobs:
 
   send-reports:
     runs-on: ubuntu-latest
+    outputs:
+      total_failed: ${{ steps.aggregate-failures.outputs.total_failed }} 
     needs: selenium-test  # Wait for all selenium-test jobs to complete
     steps:
       # Checkout the repository
@@ -199,8 +200,7 @@ jobs:
 
       # Send Allure reports and statuses to Slack
       - name: Send Allure Reports to Slack
-          echo "$needs.selenium-test.outputs.total_failed"
-        if: ${{ needs.selenium-test.outputs.total_failed > 0 }}
+        if: ${{ steps.aggregate-failures.outputs.total_failed > 0 }}
         uses: MeilCli/slack-upload-file@v4
         with:
           slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
