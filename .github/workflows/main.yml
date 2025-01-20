@@ -148,7 +148,7 @@ jobs:
             else
               COLOR="🟠" # Some tests failed
             fi
-            echo "${STATUS}: ${COLOR} Tests passed: ${0}/${TOTAL}"
+            echo "${STATUS}: ${COLOR} Tests passed: ${PASSED}/${TOTAL}"
           }
            # Check if all tests failed
           if [ "$DEV_PASSED" -eq 0 ] || [ "$STAGING_PASSED" -eq 0 ] || [ "$PRODUCTION_PASSED" -eq 0 ]; then
