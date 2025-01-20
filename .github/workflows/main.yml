@@ -13,6 +13,10 @@ jobs:
       fail-fast: false
       matrix:
         env_name: [dev, staging, production] # Run tests for each environment in parallel
+    outputs:
+      dev_failed: ${{ steps.run-dev-tests.outputs.TOTAL_FAILED }}
+      staging_failed: ${{ steps.run-staging-tests.outputs.TOTAL_FAILED }}
+      production_failed: ${{ steps.run-production-tests.outputs.TOTAL_FAILED }}
     steps:
       # Checkout the repository
       - name: Checkout code
@@ -69,6 +73,8 @@ jobs:
           STATUS_MESSAGE="Tests passed: ${TESTS_PASSED}/${TESTS_TOTAL}"
           
           echo "${STATUS_MESSAGE}" > "test-output/status-${TEST_ENV}.txt"
+          # Set output for the job
+          echo "TOTAL_FAILED=$TOTAL_FAILED" >> $GITHUB_OUTPUT
         continue-on-error: true
 
       # Generate Allure Report for the respective environment
@@ -198,6 +204,7 @@ jobs:
             ${{ env.STATUS_SUMMARY }}
 
       - name: Send Allure Reports to Slack if all tests failed
+        if: ${{ needs.selenium-test.outputs.dev_failed > 0 || needs.selenium-test.outputs.staging_failed > 0 || needs.selenium-test.outputs.production_failed > 0 }}
         uses: MeilCli/slack-upload-file@v4
         with:
           slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
