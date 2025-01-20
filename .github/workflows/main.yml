@@ -200,25 +200,7 @@ jobs:
             ${{ env.STATUS_SUMMARY }}
 
             
-      # Send Allure reports and statuses to Slack To developers
-      - name: Send Allure Reports to Slack 
-        if: ${{ steps.Create\ summary\ of\ test\ statuses.outputs.all_tests_failed == 'true' }}
-        uses: MeilCli/slack-upload-file@v4
-        with:
-          slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
-          channel_id: ${{ secrets.SLACK_CHAT_ABDULLAH_ID }}
-          file_type: 'html'
-          file_path: |
-            test-output/allure-report-dev/allure-report-dev.html
-            test-output/allure-report-staging/allure-report-staging.html
-            test-output/allure-report-production/allure-report-production.html
-          file_name: |
-            allure-report-dev.html
-            allure-report-staging.html
-            allure-report-production.html
-          initial_comment: |
-            Automation Testing Status For User Portal:
-            ${{ env.STATUS_SUMMARY }}
+  
       
       
 
