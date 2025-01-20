@@ -47,6 +47,7 @@ jobs:
 
       # Run Selenium tests for the specified environment
       - name: Run tests for ${{ matrix.env_name }}
+        id: run-${{ matrix.env_name }}-tests
         env:
           TEST_ENV: ${{ matrix.env_name }}
         run: |
@@ -73,7 +74,6 @@ jobs:
           STATUS_MESSAGE="Tests passed: ${TESTS_PASSED}/${TESTS_TOTAL}"
           
           echo "${STATUS_MESSAGE}" > "test-output/status-${TEST_ENV}.txt"
-          # Set output for the job
           echo "TOTAL_FAILED=$TOTAL_FAILED" >> $GITHUB_OUTPUT
         continue-on-error: true
 
