@@ -145,13 +145,15 @@ jobs:
               COLOR="🟢"  # All tests passed
             elif [ "$PASSED" -eq 0 ]; then
               COLOR="🔴"    # All tests failed
-              # Send notification if all tests failed
-              echo "::set-output name=all_tests_failed::true" 
             else
               COLOR="🟠" # Some tests failed
             fi
-            echo "${STATUS}: ${COLOR} Tests passed: ${PASSED}/${TOTAL}"
+            echo "${STATUS}: ${COLOR} Tests passed: ${0}/${TOTAL}"
           }
+           # Check if all tests failed
+          if [ "$DEV_PASSED" -eq 0 ] || [ "$STAGING_PASSED" -eq 0 ] || [ "$PRODUCTION_PASSED" -eq 0 ]; then
+            echo "::set-output name=all_tests_failed::true" 
+          fi
 
           # Parse and generate statuses
           DEV_STATUS=$(cat test-output/status-dev/status-dev.txt)
@@ -199,6 +201,27 @@ jobs:
             Automation Testing Status For User Portal:
             ${{ env.STATUS_SUMMARY }}
 
+            
+      # Send Allure reports and statuses to Slack To developers
+      - name: Send Allure Reports to Slack 
+        if: ${{ steps.Create\ summary\ of\ test\ statuses.outputs.all_tests_failed == 'true' }}
+        uses: MeilCli/slack-upload-file@v4
+        with:
+          slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel_id: ${{ secrets.SLACK_CHAT_ABDULLAH_ID }}
+          file_type: 'html'
+          file_path: |
+            test-output/allure-report-dev/allure-report-dev.html
+            test-output/allure-report-staging/allure-report-staging.html
+            test-output/allure-report-production/allure-report-production.html
+          file_name: |
+            allure-report-dev.html
+            allure-report-staging.html
+            allure-report-production.html
+          initial_comment: |
+            Automation Testing Status For User Portal:
+            ${{ env.STATUS_SUMMARY }}
+      
       
 
 
