@@ -45,7 +45,7 @@ jobs:
 
       # Run Selenium tests for the specified environment
       - name: Run tests for ${{ matrix.env_name }}
-        id: run-${{ matrix.env_name }}-tests
+        id: run-tests
         env:
           TEST_ENV: ${{ matrix.env_name }}
         run: |
