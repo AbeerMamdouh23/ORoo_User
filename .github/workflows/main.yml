@@ -74,7 +74,17 @@ jobs:
           echo "${STATUS_MESSAGE}" > "test-output/status-${TEST_ENV}.txt"
           echo "TOTAL_FAILED=$TOTAL_FAILED" >> $GITHUB_OUTPUT
         continue-on-error: true
-
+        
+       # Aggregate failure counts across all environments
+      - name: Set outputs
+        id: set-outputs
+        run: |
+          TOTAL_FAILED_DEV=$(cat test-output/status-dev.txt | grep -oP '\d+(?=/)')
+          TOTAL_FAILED_STAGING=$(cat test-output/status-staging.txt | grep -oP '\d+(?=/)')
+          TOTAL_FAILED_PRODUCTION=$(cat test-output/status-production.txt | grep -oP '\d+(?=/)')
+          TOTAL_FAILED=$((TOTAL_FAILED_DEV + TOTAL_FAILED_STAGING + TOTAL_FAILED_PRODUCTION))
+          echo "total_failed=$TOTAL_FAILED" >> $GITHUB_OUTPUT
+          
       # Generate Allure Report for the respective environment
       - name: Generate Allure Report for ${{ matrix.env_name }}
         run: |
@@ -184,6 +194,7 @@ jobs:
 
       # Send Allure reports and statuses to Slack
       - name: Send Allure Reports to Slack
+        if: ${{ needs.selenium-test.outputs.total_failed > 0 }}
         uses: MeilCli/slack-upload-file@v4
         with:
           slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -201,25 +212,7 @@ jobs:
             Automation Testing Status For User Portal:
             ${{ env.STATUS_SUMMARY }}
 
-      - name: Send Allure Reports to Slack if all tests failed
-        if: ${{ needs.selenium-test.outputs.total_failed > 0 }}
-        uses: MeilCli/slack-upload-file@v4
-        with:
-          slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
-          channel_id: ${{ secrets.SLACK_CHAT_ABDULLAH_ID }}
-          file_type: 'html'
-          file_path: |
-            test-output/allure-report-dev/allure-report-dev.html
-            test-output/allure-report-staging/allure-report-staging.html
-            test-output/allure-report-production/allure-report-production.html
-          file_name: |
-            allure-report-dev.html
-            allure-report-staging.html
-            allure-report-production.html
-          initial_comment: |
-            Automation Testing Status For User Portal:
-            ${{ env.STATUS_SUMMARY }}
-            
+    
   
       
       
