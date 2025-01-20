@@ -105,9 +105,9 @@ jobs:
       - name: Set outputs
         id: set-outputs
         run: |
-          TOTAL_FAILED_DEV=$(cat test-output/status-dev.txt | grep -oP '\d+(?=/)')
-          TOTAL_FAILED_STAGING=$(cat test-output/status-staging.txt | grep -oP '\d+(?=/)')
-          TOTAL_FAILED_PRODUCTION=$(cat test-output/status-production.txt | grep -oP '\d+(?=/)')
+          TOTAL_FAILED_DEV=$(cat test-output/status-dev/status-dev.txt | grep -oP '\d+(?=/)')
+          TOTAL_FAILED_STAGING=$(cat test-output/status-staging/status-staging.txt | grep -oP '\d+(?=/)')
+          TOTAL_FAILED_PRODUCTION=$(cat test-output/status-production/status-production.txt | grep -oP '\d+(?=/)')
           TOTAL_FAILED=$((TOTAL_FAILED_DEV + TOTAL_FAILED_STAGING + TOTAL_FAILED_PRODUCTION))
           echo "total_failed=$TOTAL_FAILED" >> $GITHUB_OUTPUT
 
@@ -212,10 +212,3 @@ jobs:
           initial_comment: |
             Automation Testing Status For User Portal:
             ${{ env.STATUS_SUMMARY }}
-
-    
-  
-      
-      
-
-
