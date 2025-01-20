@@ -145,13 +145,11 @@ jobs:
               COLOR="🟢"  # All tests passed
             elif [ "$PASSED" -eq 0 ]; then
               COLOR="🔴"    # All tests failed
-              echo "::set-output name=all_tests_failed::true" 
             else
               COLOR="🟠" # Some tests failed
             fi
             echo "${STATUS}: ${COLOR} Tests passed: ${PASSED}/${TOTAL}"
           }
-        
 
           # Parse and generate statuses
           DEV_STATUS=$(cat test-output/status-dev/status-dev.txt)
@@ -200,7 +198,6 @@ jobs:
             ${{ env.STATUS_SUMMARY }}
 
       - name: Send Allure Reports to Slack if all tests failed
-        if: ${{ steps.Create\ summary\ of\ test\ statuses.outputs.all_tests_failed == 'true' }}
         uses: MeilCli/slack-upload-file@v4
         with:
           slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
