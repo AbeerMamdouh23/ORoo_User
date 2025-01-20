@@ -75,15 +75,7 @@ jobs:
           echo "TOTAL_FAILED=$TOTAL_FAILED" >> $GITHUB_OUTPUT
         continue-on-error: true
         
-       # Aggregate failure counts across all environments
-      - name: Set outputs
-        id: set-outputs
-        run: |
-          TOTAL_FAILED_DEV=$(cat test-output/status-dev.txt | grep -oP '\d+(?=/)')
-          TOTAL_FAILED_STAGING=$(cat test-output/status-staging.txt | grep -oP '\d+(?=/)')
-          TOTAL_FAILED_PRODUCTION=$(cat test-output/status-production.txt | grep -oP '\d+(?=/)')
-          TOTAL_FAILED=$((TOTAL_FAILED_DEV + TOTAL_FAILED_STAGING + TOTAL_FAILED_PRODUCTION))
-          echo "total_failed=$TOTAL_FAILED" >> $GITHUB_OUTPUT
+    
           
       # Generate Allure Report for the respective environment
       - name: Generate Allure Report for ${{ matrix.env_name }}
@@ -108,7 +100,16 @@ jobs:
         with:
           name: allure-report-${{ matrix.env_name }}
           path: test-output/allure-report-${{ matrix.env_name }}
-
+          
+       # Aggregate failure counts across all environments
+      - name: Set outputs
+        id: set-outputs
+        run: |
+          TOTAL_FAILED_DEV=$(cat test-output/status-dev.txt | grep -oP '\d+(?=/)')
+          TOTAL_FAILED_STAGING=$(cat test-output/status-staging.txt | grep -oP '\d+(?=/)')
+          TOTAL_FAILED_PRODUCTION=$(cat test-output/status-production.txt | grep -oP '\d+(?=/)')
+          TOTAL_FAILED=$((TOTAL_FAILED_DEV + TOTAL_FAILED_STAGING + TOTAL_FAILED_PRODUCTION))
+          echo "total_failed=$TOTAL_FAILED" >> $GITHUB_OUTPUT
 
   send-reports:
     runs-on: ubuntu-latest
