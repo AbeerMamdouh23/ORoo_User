@@ -236,7 +236,7 @@ jobs:
         uses: MeilCli/slack-upload-file@v4
         with:
           slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
-          channel_id: ${{ secrets.SLACK_CHAT_ABDULLAH_ID }}
+          channel_id: ${{ secrets.SLACK_USER_PORTAL_CHANNEL_ID }}
           file_type: 'html'
           file_path: |
             test-output/allure-report-dev/allure-report-dev.html
