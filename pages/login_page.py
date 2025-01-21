@@ -12,20 +12,20 @@ class LoginPage(BasePage):
     EMAIL_FIELD = (By.ID, "loginFormEmailInput")
     PASSWORD_FIELD = (By.ID, "loginFormPasswordInput")
     LOGIN_BUTTON = (By.ID, "loginFormLoginButton")
-    ERROR_MESSAGE = (By.ID, "loginFormErrorMessage")
+    ERROR_MESSAGE = (By.XPATH, "//p[contains(text(), 'Invalid credentials')]")
     HOME_TEXT = (By.ID, "activationLine1")
 
-    @allure.step("enter email")
+    @allure.step("Enter Email")
     def enter_email(self, email):
         self.send_text(email, *self.EMAIL_FIELD)
         return self
 
-    @allure.step("enter password")
+    @allure.step("Enter Password")
     def enter_password(self, password):
         self.send_text(password, *self.PASSWORD_FIELD)
         return self
 
-    @allure.step("click on login button")
+    @allure.step("Click on login button")
     def click_login(self):
         self.click(*self.LOGIN_BUTTON)
         return self
@@ -37,13 +37,13 @@ class LoginPage(BasePage):
         return self
 
 
-    @allure.step("validate success login ")
+    @allure.step("Validate success login ")
     def assert_success_login(self):
         assert  self.assert_on_login()==False
         return DevicesPage(self.driver)
 
 
-    @allure.step("validate fail login ")
+    @allure.step("Validate fail login ")
     def assert_fail_login(self):
         assert  self.assert_on_login()==True
         return DevicesPage(self.driver)

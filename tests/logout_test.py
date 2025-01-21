@@ -18,17 +18,14 @@ class TestLogout:
         self.driver = setup  # Assign the driver from the fixture
 
         # Initialize the LoginPage object with the driver instance
-        login_page = LoginPage(self.driver)
-        login_page.login_steps(Config.USERNAME, Config.PASSWORD)
+        (LoginPage(self.driver)
+         .login_steps(Config.USERNAME, Config.PASSWORD)
+         .assert_success_login())
 
-        # Initialize the LogOutPage object with the driver instance
-        logout_page = LogOutPage(self.driver)
+        # Initialize the LogOutPage object with the driver instance & Perform logout action
+        (LogOutPage(self.driver)
+         .click_profile_button()
+         .click_logout_button()
+         .assert_success_logout())
 
-        # Perform logout action
-        logout_page.click_profile_button()
-        logout_page.click_logout_button()
-
-
-        # Assert and handle screenshot on failure
-        assert  logout_page.get_login_page().is_displayed()
         take_screenshot(self.driver, "logout_screenshot")

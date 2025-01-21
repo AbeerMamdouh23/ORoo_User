@@ -19,22 +19,19 @@ class TestProfile:
         self.driver = setup  # Assign the driver from the fixture
 
         # Initialize the LoginPage object with the driver instance
-        login_page = LoginPage(self.driver)
-        login_page.login_steps(Config.USERNAME, Config.PASSWORD)
+        (LoginPage(self.driver)
+         .login_steps(Config.USERNAME, Config.PASSWORD)
+         .assert_success_login())
 
-        # Initialize the ProfilePage object with the driver instance
-        profile_page = ProfilePage(self.driver)
-
-        # click on profile avatar icon
-        profile_page.click_profile_avatar()
-
-        # Assert and handle screenshot on failure of first name
-        assert profile_page.check_full_name().is_displayed()
-        assert profile_page.check_email().is_displayed()
-        assert profile_page.check_phone_number().is_displayed()
-        assert profile_page.check_home_address().is_displayed()
-        assert profile_page.check_birth_date().is_displayed()
-        assert profile_page.check_post_code().is_displayed()
-        assert profile_page.check_logout_button().is_displayed()
+        # Actions & assertions for Profile page
+        (ProfilePage(self.driver)
+         .click_profile_avatar()
+         .check_full_name()
+         .check_email()
+         .check_phone_number()
+         .check_home_address()
+         .check_birth_date()
+         .check_post_code()
+         .check_logout_button())
 
         take_screenshot(self.driver, "verify_Profile_Page_screenshot")
