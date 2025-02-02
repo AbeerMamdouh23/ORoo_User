@@ -28,7 +28,7 @@ class TestActivation:
         (ActivationPage(self.driver)
          .enter_activation_code(random_code)
          .click_activate_button()
-         .assert_valid_code())
+         .assert_success_activation())
         print(f"Activation code '{random_code}'")
 
         ActivationCodeManager.delete_activation_code('activation_codes.json',random_code)
@@ -46,5 +46,5 @@ class TestActivation:
         (ActivationPage(self.driver)
          .enter_activation_code("111")
          .click_activate_button()
-         .assert_invalid_code())
+         .assert_fail_activation())
         take_screenshot(self.driver, "in_valid_activation_code_screenshot")
