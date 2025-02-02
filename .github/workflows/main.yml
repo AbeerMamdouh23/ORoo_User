@@ -90,12 +90,12 @@ jobs:
 
       # Upload status message and Allure report artifacts
       - name: Upload status and Allure report artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: status-${{ matrix.env_name }}
           path: test-output/status-${{ matrix.env_name }}.txt
       - name: Upload Allure report artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: allure-report-${{ matrix.env_name }}
           path: test-output/allure-report-${{ matrix.env_name }}
@@ -114,29 +114,29 @@ jobs:
 
       # Download all statuses and reports
       - name: Download status files
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: status-dev
           path: test-output/status-dev
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: status-staging
           path: test-output/status-staging
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: status-production
           path: test-output/status-production
 
       - name: Download Allure Reports
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: allure-report-dev
           path: test-output/allure-report-dev
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: allure-report-staging
           path: test-output/allure-report-staging
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: allure-report-production
           path: test-output/allure-report-production
