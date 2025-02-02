@@ -40,12 +40,12 @@ class ActivationPage(BasePage):
 
     @allure.step("Activated device founded")
     def assert_success_activation(self):
-        assert self.assert_valid_code() == True
+        assert self.assert_on_found_activated_devices() == True
         return self
 
     @allure.step("No activated devices yet")
     def assert_fail_activation(self):
-        assert self.assert_invalid_code() == False
+        assert self.assert_on_found_activated_devices() == False
         return self
 
 

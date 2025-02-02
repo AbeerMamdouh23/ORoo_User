@@ -24,6 +24,7 @@ class TestDevice:
 
         # Initialize the DevicePage object with the driver instance
         (DevicePage(self.driver)
+         .assert_success_found()
          .click_activated_device()
          .assert_device_name()
          .assert_device_type()
