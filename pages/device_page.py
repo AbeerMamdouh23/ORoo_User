@@ -43,3 +43,23 @@ class DevicePage(BasePage):
         assert self.find_element(*self.DEVICE_ACTIVATION_FIELD)
         return self
 
+
+    def find_activated_device(self):
+        return self.find_element(*self.ACTIVATED_DEVICE)
+
+
+    @allure.step("Activated device founded")
+    def assert_success_found(self):
+        assert self.assert_on_found_activated_devices() == True
+        return self
+
+    @allure.step("No activated devices yet")
+    def assert_fail_found(self):
+        assert self.assert_on_found_activated_devices() == False
+        return self
+
+    def assert_on_found_activated_devices(self):
+        try:
+            return self.find_activated_device().is_displayed()
+        except Exception:
+            return False
