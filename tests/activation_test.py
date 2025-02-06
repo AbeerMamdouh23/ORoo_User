@@ -13,7 +13,6 @@ logger = logger_instance.get_logger()
 
 @pytest.mark.usefixtures("setup")  # Ensure this matches the fixture name
 class TestActivation:
-
     # Test case for valid activation code
     def test_valid_activation_code(self, setup):
         self.driver = setup  # Assign the driver from the fixture
@@ -24,14 +23,14 @@ class TestActivation:
 
 
         # Perform login actions with valid credentials
-        random_code = ActivationCodeManager.get_random_activation_code('activation_codes.json')
+        activation_page = ActivationPage(self.driver).get_activation_code_using_api()
+        print(activation_page.activation_code)
         (ActivationPage(self.driver)
-         .enter_activation_code(random_code)
+         .get_activation_code_using_api()
+         .enter_activation_code(activation_page.activation_code)
          .click_activate_button()
          .assert_success_activation())
-        print(f"Activation code '{random_code}'")
-
-        ActivationCodeManager.delete_activation_code('activation_codes.json',random_code)
+        (ActivationPage(self.driver).get_deactivation_code_using_api())
         take_screenshot(self.driver, "valid_activation_code_screenshot")
 
     # Test case for invalid activation code
@@ -39,6 +38,8 @@ class TestActivation:
         self.driver = setup  # Assign the driver from the fixture
 
         # Initialize the LoginPage object with the driver instance
+
+
         (LoginPage(self.driver)
          .login_steps(Config.USERNAME, Config.PASSWORD))
 
